@@ -1,0 +1,3284 @@
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"jsmn.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.jsmn_alloc_token,"ax",%progbits
+  20              		.align	2
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	jsmn_alloc_token, %function
+  24              	jsmn_alloc_token:
+  25              	.LFB0:
+  26              		.file 1 "jsmn.c"
+   1:jsmn.c        **** #include "jsmn.h"
+   2:jsmn.c        **** 
+   3:jsmn.c        **** /**
+   4:jsmn.c        ****  * Allocates a fresh unused token from the token pool.
+   5:jsmn.c        ****  */
+   6:jsmn.c        **** static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser, jsmntok_t *tokens,
+   7:jsmn.c        ****                                   const size_t num_tokens) {
+  27              		.loc 1 7 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+   8:jsmn.c        ****   jsmntok_t *tok;
+   9:jsmn.c        ****   if (parser->toknext >= num_tokens) {
+  33              		.loc 1 9 0
+  34 0000 4368     		ldr	r3, [r0, #4]
+  35 0002 9342     		cmp	r3, r2
+  36 0004 0AD2     		bcs	.L3
+  10:jsmn.c        ****     return NULL;
+  11:jsmn.c        ****   }
+  12:jsmn.c        ****   tok = &tokens[parser->toknext++];
+  37              		.loc 1 12 0
+  38 0006 5A1C     		adds	r2, r3, #1
+  39              	.LVL1:
+  40 0008 4260     		str	r2, [r0, #4]
+  41 000a 01EB0310 		add	r0, r1, r3, lsl #4
+  42              	.LVL2:
+  13:jsmn.c        ****   tok->start = tok->end = -1;
+  43              		.loc 1 13 0
+  44 000e 4FF0FF33 		mov	r3, #-1
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 2
+
+
+  45 0012 8360     		str	r3, [r0, #8]
+  46 0014 4360     		str	r3, [r0, #4]
+  14:jsmn.c        ****   tok->size = 0;
+  47              		.loc 1 14 0
+  48 0016 0023     		movs	r3, #0
+  49 0018 C360     		str	r3, [r0, #12]
+  15:jsmn.c        **** #ifdef JSMN_PARENT_LINKS
+  16:jsmn.c        ****   tok->parent = -1;
+  17:jsmn.c        **** #endif
+  18:jsmn.c        ****   return tok;
+  50              		.loc 1 18 0
+  51 001a 7047     		bx	lr
+  52              	.LVL3:
+  53              	.L3:
+  10:jsmn.c        ****   }
+  54              		.loc 1 10 0
+  55 001c 0020     		movs	r0, #0
+  56              	.LVL4:
+  19:jsmn.c        **** }
+  57              		.loc 1 19 0
+  58 001e 7047     		bx	lr
+  59              		.cfi_endproc
+  60              	.LFE0:
+  61              		.size	jsmn_alloc_token, .-jsmn_alloc_token
+  62              		.section	.text.jsmn_fill_token,"ax",%progbits
+  63              		.align	2
+  64              		.thumb
+  65              		.thumb_func
+  66              		.type	jsmn_fill_token, %function
+  67              	jsmn_fill_token:
+  68              	.LFB1:
+  20:jsmn.c        **** 
+  21:jsmn.c        **** /**
+  22:jsmn.c        ****  * Fills token type and boundaries.
+  23:jsmn.c        ****  */
+  24:jsmn.c        **** static void jsmn_fill_token(jsmntok_t *token, const jsmntype_t type,
+  25:jsmn.c        ****                            const int start, const int end) {
+  69              		.loc 1 25 0
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+  74              	.LVL5:
+  26:jsmn.c        ****   token->type = type;
+  75              		.loc 1 26 0
+  76 0000 0170     		strb	r1, [r0]
+  27:jsmn.c        ****   token->start = start;
+  77              		.loc 1 27 0
+  78 0002 4260     		str	r2, [r0, #4]
+  28:jsmn.c        ****   token->end = end;
+  79              		.loc 1 28 0
+  80 0004 8360     		str	r3, [r0, #8]
+  29:jsmn.c        ****   token->size = 0;
+  81              		.loc 1 29 0
+  82 0006 0023     		movs	r3, #0
+  83              	.LVL6:
+  84 0008 C360     		str	r3, [r0, #12]
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 3
+
+
+  85 000a 7047     		bx	lr
+  86              		.cfi_endproc
+  87              	.LFE1:
+  88              		.size	jsmn_fill_token, .-jsmn_fill_token
+  89              		.section	.text.jsmn_parse_primitive,"ax",%progbits
+  90              		.align	2
+  91              		.thumb
+  92              		.thumb_func
+  93              		.type	jsmn_parse_primitive, %function
+  94              	jsmn_parse_primitive:
+  95              	.LFB2:
+  30:jsmn.c        **** }
+  31:jsmn.c        **** 
+  32:jsmn.c        **** /**
+  33:jsmn.c        ****  * Fills next available token with JSON primitive.
+  34:jsmn.c        ****  */
+  35:jsmn.c        **** static int jsmn_parse_primitive(jsmn_parser *parser, const char *js,
+  36:jsmn.c        ****                                const size_t len, jsmntok_t *tokens,
+  37:jsmn.c        ****                                const size_t num_tokens) {
+  96              		.loc 1 37 0
+  97              		.cfi_startproc
+  98              		@ args = 4, pretend = 0, frame = 0
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100              	.LVL7:
+ 101 0000 70B5     		push	{r4, r5, r6, lr}
+ 102              		.cfi_def_cfa_offset 16
+ 103              		.cfi_offset 4, -16
+ 104              		.cfi_offset 5, -12
+ 105              		.cfi_offset 6, -8
+ 106              		.cfi_offset 14, -4
+  38:jsmn.c        ****   jsmntok_t *token;
+  39:jsmn.c        ****   int start;
+  40:jsmn.c        **** 
+  41:jsmn.c        ****   start = parser->pos;
+ 107              		.loc 1 41 0
+ 108 0002 0668     		ldr	r6, [r0]
+ 109              	.LVL8:
+  42:jsmn.c        **** 
+  43:jsmn.c        ****   for (; parser->pos < len && js[parser->pos] != '\0'; parser->pos++) {
+ 110              		.loc 1 43 0
+ 111 0004 1DE0     		b	.L6
+ 112              	.L13:
+  44:jsmn.c        ****     switch (js[parser->pos]) {
+ 113              		.loc 1 44 0
+ 114 0006 202C     		cmp	r4, #32
+ 115 0008 21D0     		beq	.L8
+ 116 000a 06D8     		bhi	.L9
+ 117 000c 092C     		cmp	r4, #9
+ 118 000e 0ED3     		bcc	.L7
+ 119 0010 0A2C     		cmp	r4, #10
+ 120 0012 1CD9     		bls	.L8
+ 121 0014 0D2C     		cmp	r4, #13
+ 122 0016 0AD1     		bne	.L7
+ 123 0018 19E0     		b	.L8
+ 124              	.L9:
+ 125 001a 3A2C     		cmp	r4, #58
+ 126 001c 17D0     		beq	.L8
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 4
+
+
+ 127 001e 02D8     		bhi	.L10
+ 128 0020 2C2C     		cmp	r4, #44
+ 129 0022 04D1     		bne	.L7
+ 130 0024 13E0     		b	.L8
+ 131              	.L10:
+ 132 0026 5D2C     		cmp	r4, #93
+ 133 0028 11D0     		beq	.L8
+ 134 002a 7D2C     		cmp	r4, #125
+ 135 002c 0FD0     		beq	.L8
+ 136              	.L7:
+  45:jsmn.c        **** #ifndef JSMN_STRICT
+  46:jsmn.c        ****     /* In strict mode primitive must be followed by "," or "}" or "]" */
+  47:jsmn.c        ****     case ':':
+  48:jsmn.c        **** #endif
+  49:jsmn.c        ****     case '\t':
+  50:jsmn.c        ****     case '\r':
+  51:jsmn.c        ****     case '\n':
+  52:jsmn.c        ****     case ' ':
+  53:jsmn.c        ****     case ',':
+  54:jsmn.c        ****     case ']':
+  55:jsmn.c        ****     case '}':
+  56:jsmn.c        ****       goto found;
+  57:jsmn.c        ****     default:
+  58:jsmn.c        ****       break;
+  59:jsmn.c        ****     }
+  60:jsmn.c        ****     if (js[parser->pos] < 32 || js[parser->pos] >= 127) {
+ 137              		.loc 1 60 0
+ 138 002e 203C     		subs	r4, r4, #32
+ 139 0030 E4B2     		uxtb	r4, r4
+ 140 0032 5E2C     		cmp	r4, #94
+ 141 0034 03D9     		bls	.L11
+  61:jsmn.c        ****       parser->pos = start;
+ 142              		.loc 1 61 0
+ 143 0036 0660     		str	r6, [r0]
+  62:jsmn.c        ****       return JSMN_ERROR_INVAL;
+ 144              		.loc 1 62 0
+ 145 0038 6FF00100 		mvn	r0, #1
+ 146              	.LVL9:
+ 147 003c 70BD     		pop	{r4, r5, r6, pc}
+ 148              	.LVL10:
+ 149              	.L11:
+  43:jsmn.c        ****     switch (js[parser->pos]) {
+ 150              		.loc 1 43 0
+ 151 003e 0135     		adds	r5, r5, #1
+ 152 0040 0560     		str	r5, [r0]
+ 153              	.L6:
+  43:jsmn.c        ****     switch (js[parser->pos]) {
+ 154              		.loc 1 43 0 is_stmt 0 discriminator 1
+ 155 0042 0568     		ldr	r5, [r0]
+ 156 0044 9542     		cmp	r5, r2
+ 157 0046 02D2     		bcs	.L8
+  43:jsmn.c        ****     switch (js[parser->pos]) {
+ 158              		.loc 1 43 0 discriminator 2
+ 159 0048 4C5D     		ldrb	r4, [r1, r5]	@ zero_extendqisi2
+ 160 004a 002C     		cmp	r4, #0
+ 161 004c DBD1     		bne	.L13
+ 162              	.L8:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 5
+
+
+  63:jsmn.c        ****     }
+  64:jsmn.c        ****   }
+  65:jsmn.c        **** #ifdef JSMN_STRICT
+  66:jsmn.c        ****   /* In strict mode primitive must be followed by a comma/object/array */
+  67:jsmn.c        ****   parser->pos = start;
+  68:jsmn.c        ****   return JSMN_ERROR_PART;
+  69:jsmn.c        **** #endif
+  70:jsmn.c        **** 
+  71:jsmn.c        **** found:
+  72:jsmn.c        ****   if (tokens == NULL) {
+ 163              		.loc 1 72 0 is_stmt 1
+ 164 004e 1BB9     		cbnz	r3, .L14
+  73:jsmn.c        ****     parser->pos--;
+ 165              		.loc 1 73 0
+ 166 0050 013D     		subs	r5, r5, #1
+ 167 0052 0560     		str	r5, [r0]
+  74:jsmn.c        ****     return 0;
+ 168              		.loc 1 74 0
+ 169 0054 0020     		movs	r0, #0
+ 170              	.LVL11:
+ 171 0056 70BD     		pop	{r4, r5, r6, pc}
+ 172              	.LVL12:
+ 173              	.L14:
+ 174 0058 1946     		mov	r1, r3
+ 175              	.LVL13:
+ 176 005a 0446     		mov	r4, r0
+  75:jsmn.c        ****   }
+  76:jsmn.c        ****   token = jsmn_alloc_token(parser, tokens, num_tokens);
+ 177              		.loc 1 76 0
+ 178 005c 049A     		ldr	r2, [sp, #16]
+ 179              	.LVL14:
+ 180 005e FFF7FEFF 		bl	jsmn_alloc_token
+ 181              	.LVL15:
+  77:jsmn.c        ****   if (token == NULL) {
+ 182              		.loc 1 77 0
+ 183 0062 18B9     		cbnz	r0, .L15
+  78:jsmn.c        ****     parser->pos = start;
+ 184              		.loc 1 78 0
+ 185 0064 2660     		str	r6, [r4]
+  79:jsmn.c        ****     return JSMN_ERROR_NOMEM;
+ 186              		.loc 1 79 0
+ 187 0066 4FF0FF30 		mov	r0, #-1
+ 188              	.LVL16:
+ 189 006a 70BD     		pop	{r4, r5, r6, pc}
+ 190              	.LVL17:
+ 191              	.L15:
+  80:jsmn.c        ****   }
+  81:jsmn.c        ****   jsmn_fill_token(token, JSMN_PRIMITIVE, start, parser->pos);
+ 192              		.loc 1 81 0
+ 193 006c 2368     		ldr	r3, [r4]
+ 194 006e 3246     		mov	r2, r6
+ 195 0070 0821     		movs	r1, #8
+ 196 0072 FFF7FEFF 		bl	jsmn_fill_token
+ 197              	.LVL18:
+  82:jsmn.c        **** #ifdef JSMN_PARENT_LINKS
+  83:jsmn.c        ****   token->parent = parser->toksuper;
+  84:jsmn.c        **** #endif
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 6
+
+
+  85:jsmn.c        ****   parser->pos--;
+ 198              		.loc 1 85 0
+ 199 0076 2368     		ldr	r3, [r4]
+ 200 0078 013B     		subs	r3, r3, #1
+ 201 007a 2360     		str	r3, [r4]
+  86:jsmn.c        ****   return 0;
+ 202              		.loc 1 86 0
+ 203 007c 0020     		movs	r0, #0
+  87:jsmn.c        **** }
+ 204              		.loc 1 87 0
+ 205 007e 70BD     		pop	{r4, r5, r6, pc}
+ 206              		.cfi_endproc
+ 207              	.LFE2:
+ 208              		.size	jsmn_parse_primitive, .-jsmn_parse_primitive
+ 209              		.section	.text.jsmn_parse_string,"ax",%progbits
+ 210              		.align	2
+ 211              		.thumb
+ 212              		.thumb_func
+ 213              		.type	jsmn_parse_string, %function
+ 214              	jsmn_parse_string:
+ 215              	.LFB3:
+  88:jsmn.c        **** 
+  89:jsmn.c        **** /**
+  90:jsmn.c        ****  * Fills next token with JSON string.
+  91:jsmn.c        ****  */
+  92:jsmn.c        **** static int jsmn_parse_string(jsmn_parser *parser, const char *js,
+  93:jsmn.c        ****                             const size_t len, jsmntok_t *tokens,
+  94:jsmn.c        ****                             const size_t num_tokens) {
+ 216              		.loc 1 94 0
+ 217              		.cfi_startproc
+ 218              		@ args = 4, pretend = 0, frame = 0
+ 219              		@ frame_needed = 0, uses_anonymous_args = 0
+ 220              	.LVL19:
+ 221 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 222              		.cfi_def_cfa_offset 24
+ 223              		.cfi_offset 3, -24
+ 224              		.cfi_offset 4, -20
+ 225              		.cfi_offset 5, -16
+ 226              		.cfi_offset 6, -12
+ 227              		.cfi_offset 7, -8
+ 228              		.cfi_offset 14, -4
+  95:jsmn.c        ****   jsmntok_t *token;
+  96:jsmn.c        **** 
+  97:jsmn.c        ****   int start = parser->pos;
+ 229              		.loc 1 97 0
+ 230 0002 0668     		ldr	r6, [r0]
+ 231              	.LVL20:
+  98:jsmn.c        ****   
+  99:jsmn.c        ****   /* Skip starting quote */
+ 100:jsmn.c        ****   parser->pos++;
+ 232              		.loc 1 100 0
+ 233 0004 741C     		adds	r4, r6, #1
+ 234 0006 0460     		str	r4, [r0]
+ 101:jsmn.c        ****   
+ 102:jsmn.c        ****   for (; parser->pos < len && js[parser->pos] != '\0'; parser->pos++) {
+ 235              		.loc 1 102 0
+ 236 0008 7AE0     		b	.L18
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 7
+
+
+ 237              	.L31:
+ 238              	.LVL21:
+ 239              	.LBB2:
+ 103:jsmn.c        ****     char c = js[parser->pos];
+ 104:jsmn.c        **** 
+ 105:jsmn.c        ****     /* Quote: end of string */
+ 106:jsmn.c        ****     if (c == '\"') {
+ 240              		.loc 1 106 0
+ 241 000a 222D     		cmp	r5, #34
+ 242 000c 13D1     		bne	.L19
+ 107:jsmn.c        ****       if (tokens == NULL) {
+ 243              		.loc 1 107 0
+ 244 000e 002B     		cmp	r3, #0
+ 245 0010 00F08180 		beq	.L32
+ 246 0014 1946     		mov	r1, r3
+ 247              	.LVL22:
+ 248 0016 0446     		mov	r4, r0
+ 108:jsmn.c        ****         return 0;
+ 109:jsmn.c        ****       }
+ 110:jsmn.c        ****       token = jsmn_alloc_token(parser, tokens, num_tokens);
+ 249              		.loc 1 110 0
+ 250 0018 069A     		ldr	r2, [sp, #24]
+ 251              	.LVL23:
+ 252 001a FFF7FEFF 		bl	jsmn_alloc_token
+ 253              	.LVL24:
+ 111:jsmn.c        ****       if (token == NULL) {
+ 254              		.loc 1 111 0
+ 255 001e 18B9     		cbnz	r0, .L21
+ 112:jsmn.c        ****         parser->pos = start;
+ 256              		.loc 1 112 0
+ 257 0020 2660     		str	r6, [r4]
+ 113:jsmn.c        ****         return JSMN_ERROR_NOMEM;
+ 258              		.loc 1 113 0
+ 259 0022 4FF0FF30 		mov	r0, #-1
+ 260              	.LVL25:
+ 261 0026 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 262              	.LVL26:
+ 263              	.L21:
+ 114:jsmn.c        ****       }
+ 115:jsmn.c        ****       jsmn_fill_token(token, JSMN_STRING, start + 1, parser->pos);
+ 264              		.loc 1 115 0
+ 265 0028 2368     		ldr	r3, [r4]
+ 266 002a 721C     		adds	r2, r6, #1
+ 267 002c 0421     		movs	r1, #4
+ 268 002e FFF7FEFF 		bl	jsmn_fill_token
+ 269              	.LVL27:
+ 116:jsmn.c        **** #ifdef JSMN_PARENT_LINKS
+ 117:jsmn.c        ****       token->parent = parser->toksuper;
+ 118:jsmn.c        **** #endif
+ 119:jsmn.c        ****       return 0;
+ 270              		.loc 1 119 0
+ 271 0032 0020     		movs	r0, #0
+ 272 0034 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 273              	.LVL28:
+ 274              	.L19:
+ 120:jsmn.c        ****     }
+ 121:jsmn.c        **** 
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 8
+
+
+ 122:jsmn.c        ****     /* Backslash: Quoted symbol expected */
+ 123:jsmn.c        ****     if (c == '\\' && parser->pos + 1 < len) {
+ 275              		.loc 1 123 0
+ 276 0036 5C2D     		cmp	r5, #92
+ 277 0038 5FD1     		bne	.L22
+ 278              		.loc 1 123 0 is_stmt 0 discriminator 1
+ 279 003a 0134     		adds	r4, r4, #1
+ 280 003c A242     		cmp	r2, r4
+ 281 003e 5CD9     		bls	.L22
+ 282              	.LBB3:
+ 124:jsmn.c        ****       int i;
+ 125:jsmn.c        ****       parser->pos++;
+ 283              		.loc 1 125 0 is_stmt 1
+ 284 0040 0460     		str	r4, [r0]
+ 126:jsmn.c        ****       switch (js[parser->pos]) {
+ 285              		.loc 1 126 0
+ 286 0042 0D5D     		ldrb	r5, [r1, r4]	@ zero_extendqisi2
+ 287              	.LVL29:
+ 288 0044 223D     		subs	r5, r5, #34
+ 289 0046 532D     		cmp	r5, #83
+ 290 0048 53D8     		bhi	.L23
+ 291 004a DFE805F0 		tbb	[pc, r5]
+ 292              	.L24:
+ 293 004e 56       		.byte	(.L22-.L24)/2
+ 294 004f 52       		.byte	(.L23-.L24)/2
+ 295 0050 52       		.byte	(.L23-.L24)/2
+ 296 0051 52       		.byte	(.L23-.L24)/2
+ 297 0052 52       		.byte	(.L23-.L24)/2
+ 298 0053 52       		.byte	(.L23-.L24)/2
+ 299 0054 52       		.byte	(.L23-.L24)/2
+ 300 0055 52       		.byte	(.L23-.L24)/2
+ 301 0056 52       		.byte	(.L23-.L24)/2
+ 302 0057 52       		.byte	(.L23-.L24)/2
+ 303 0058 52       		.byte	(.L23-.L24)/2
+ 304 0059 52       		.byte	(.L23-.L24)/2
+ 305 005a 52       		.byte	(.L23-.L24)/2
+ 306 005b 56       		.byte	(.L22-.L24)/2
+ 307 005c 52       		.byte	(.L23-.L24)/2
+ 308 005d 52       		.byte	(.L23-.L24)/2
+ 309 005e 52       		.byte	(.L23-.L24)/2
+ 310 005f 52       		.byte	(.L23-.L24)/2
+ 311 0060 52       		.byte	(.L23-.L24)/2
+ 312 0061 52       		.byte	(.L23-.L24)/2
+ 313 0062 52       		.byte	(.L23-.L24)/2
+ 314 0063 52       		.byte	(.L23-.L24)/2
+ 315 0064 52       		.byte	(.L23-.L24)/2
+ 316 0065 52       		.byte	(.L23-.L24)/2
+ 317 0066 52       		.byte	(.L23-.L24)/2
+ 318 0067 52       		.byte	(.L23-.L24)/2
+ 319 0068 52       		.byte	(.L23-.L24)/2
+ 320 0069 52       		.byte	(.L23-.L24)/2
+ 321 006a 52       		.byte	(.L23-.L24)/2
+ 322 006b 52       		.byte	(.L23-.L24)/2
+ 323 006c 52       		.byte	(.L23-.L24)/2
+ 324 006d 52       		.byte	(.L23-.L24)/2
+ 325 006e 52       		.byte	(.L23-.L24)/2
+ 326 006f 52       		.byte	(.L23-.L24)/2
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 9
+
+
+ 327 0070 52       		.byte	(.L23-.L24)/2
+ 328 0071 52       		.byte	(.L23-.L24)/2
+ 329 0072 52       		.byte	(.L23-.L24)/2
+ 330 0073 52       		.byte	(.L23-.L24)/2
+ 331 0074 52       		.byte	(.L23-.L24)/2
+ 332 0075 52       		.byte	(.L23-.L24)/2
+ 333 0076 52       		.byte	(.L23-.L24)/2
+ 334 0077 52       		.byte	(.L23-.L24)/2
+ 335 0078 52       		.byte	(.L23-.L24)/2
+ 336 0079 52       		.byte	(.L23-.L24)/2
+ 337 007a 52       		.byte	(.L23-.L24)/2
+ 338 007b 52       		.byte	(.L23-.L24)/2
+ 339 007c 52       		.byte	(.L23-.L24)/2
+ 340 007d 52       		.byte	(.L23-.L24)/2
+ 341 007e 52       		.byte	(.L23-.L24)/2
+ 342 007f 52       		.byte	(.L23-.L24)/2
+ 343 0080 52       		.byte	(.L23-.L24)/2
+ 344 0081 52       		.byte	(.L23-.L24)/2
+ 345 0082 52       		.byte	(.L23-.L24)/2
+ 346 0083 52       		.byte	(.L23-.L24)/2
+ 347 0084 52       		.byte	(.L23-.L24)/2
+ 348 0085 52       		.byte	(.L23-.L24)/2
+ 349 0086 52       		.byte	(.L23-.L24)/2
+ 350 0087 52       		.byte	(.L23-.L24)/2
+ 351 0088 56       		.byte	(.L22-.L24)/2
+ 352 0089 52       		.byte	(.L23-.L24)/2
+ 353 008a 52       		.byte	(.L23-.L24)/2
+ 354 008b 52       		.byte	(.L23-.L24)/2
+ 355 008c 52       		.byte	(.L23-.L24)/2
+ 356 008d 52       		.byte	(.L23-.L24)/2
+ 357 008e 56       		.byte	(.L22-.L24)/2
+ 358 008f 52       		.byte	(.L23-.L24)/2
+ 359 0090 52       		.byte	(.L23-.L24)/2
+ 360 0091 52       		.byte	(.L23-.L24)/2
+ 361 0092 56       		.byte	(.L22-.L24)/2
+ 362 0093 52       		.byte	(.L23-.L24)/2
+ 363 0094 52       		.byte	(.L23-.L24)/2
+ 364 0095 52       		.byte	(.L23-.L24)/2
+ 365 0096 52       		.byte	(.L23-.L24)/2
+ 366 0097 52       		.byte	(.L23-.L24)/2
+ 367 0098 52       		.byte	(.L23-.L24)/2
+ 368 0099 52       		.byte	(.L23-.L24)/2
+ 369 009a 56       		.byte	(.L22-.L24)/2
+ 370 009b 52       		.byte	(.L23-.L24)/2
+ 371 009c 52       		.byte	(.L23-.L24)/2
+ 372 009d 52       		.byte	(.L23-.L24)/2
+ 373 009e 56       		.byte	(.L22-.L24)/2
+ 374 009f 52       		.byte	(.L23-.L24)/2
+ 375 00a0 56       		.byte	(.L22-.L24)/2
+ 376 00a1 2A       		.byte	(.L25-.L24)/2
+ 377              		.p2align 1
+ 378              	.L25:
+ 127:jsmn.c        ****       /* Allowed escaped symbols */
+ 128:jsmn.c        ****       case '\"':
+ 129:jsmn.c        ****       case '/':
+ 130:jsmn.c        ****       case '\\':
+ 131:jsmn.c        ****       case 'b':
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 10
+
+
+ 132:jsmn.c        ****       case 'f':
+ 133:jsmn.c        ****       case 'r':
+ 134:jsmn.c        ****       case 'n':
+ 135:jsmn.c        ****       case 't':
+ 136:jsmn.c        ****         break;
+ 137:jsmn.c        ****       /* Allows escaped symbol \uXXXX */
+ 138:jsmn.c        ****       case 'u':
+ 139:jsmn.c        ****         parser->pos++;
+ 379              		.loc 1 139 0
+ 380 00a2 0134     		adds	r4, r4, #1
+ 381 00a4 0460     		str	r4, [r0]
+ 382              	.LVL30:
+ 140:jsmn.c        ****         for (i = 0; i < 4 && parser->pos < len && js[parser->pos] != '\0';
+ 383              		.loc 1 140 0
+ 384 00a6 4FF0000E 		mov	lr, #0
+ 385 00aa 15E0     		b	.L26
+ 386              	.LVL31:
+ 387              	.L29:
+ 141:jsmn.c        ****              i++) {
+ 142:jsmn.c        ****           /* If it isn't a hex character we have an error */
+ 143:jsmn.c        ****           if (!((js[parser->pos] >= 48 && js[parser->pos] <= 57) ||   /* 0-9 */
+ 388              		.loc 1 143 0
+ 389 00ac A5F13007 		sub	r7, r5, #48
+ 390 00b0 FFB2     		uxtb	r7, r7
+ 391 00b2 092F     		cmp	r7, #9
+ 392 00b4 0CD9     		bls	.L27
+ 144:jsmn.c        ****                 (js[parser->pos] >= 65 && js[parser->pos] <= 70) ||   /* A-F */
+ 393              		.loc 1 144 0 discriminator 1
+ 394 00b6 A5F14107 		sub	r7, r5, #65
+ 395 00ba FFB2     		uxtb	r7, r7
+ 143:jsmn.c        ****                 (js[parser->pos] >= 65 && js[parser->pos] <= 70) ||   /* A-F */
+ 396              		.loc 1 143 0 discriminator 1
+ 397 00bc 052F     		cmp	r7, #5
+ 398 00be 07D9     		bls	.L27
+ 145:jsmn.c        ****                 (js[parser->pos] >= 97 && js[parser->pos] <= 102))) { /* a-f */
+ 399              		.loc 1 145 0 discriminator 2
+ 400 00c0 613D     		subs	r5, r5, #97
+ 401 00c2 EDB2     		uxtb	r5, r5
+ 143:jsmn.c        ****                 (js[parser->pos] >= 65 && js[parser->pos] <= 70) ||   /* A-F */
+ 402              		.loc 1 143 0 discriminator 2
+ 403 00c4 052D     		cmp	r5, #5
+ 404 00c6 03D9     		bls	.L27
+ 146:jsmn.c        ****             parser->pos = start;
+ 405              		.loc 1 146 0
+ 406 00c8 0660     		str	r6, [r0]
+ 147:jsmn.c        ****             return JSMN_ERROR_INVAL;
+ 407              		.loc 1 147 0
+ 408 00ca 6FF00100 		mvn	r0, #1
+ 409              	.LVL32:
+ 410 00ce F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 411              	.LVL33:
+ 412              	.L27:
+ 148:jsmn.c        ****           }
+ 149:jsmn.c        ****           parser->pos++;
+ 413              		.loc 1 149 0
+ 414 00d0 0134     		adds	r4, r4, #1
+ 415 00d2 0460     		str	r4, [r0]
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 11
+
+
+ 141:jsmn.c        ****           /* If it isn't a hex character we have an error */
+ 416              		.loc 1 141 0
+ 417 00d4 0EF1010E 		add	lr, lr, #1
+ 418              	.LVL34:
+ 419              	.L26:
+ 140:jsmn.c        ****              i++) {
+ 420              		.loc 1 140 0 discriminator 1
+ 421 00d8 BEF1030F 		cmp	lr, #3
+ 422 00dc 05DC     		bgt	.L28
+ 140:jsmn.c        ****              i++) {
+ 423              		.loc 1 140 0 is_stmt 0 discriminator 2
+ 424 00de 0468     		ldr	r4, [r0]
+ 425 00e0 A242     		cmp	r2, r4
+ 426 00e2 02D9     		bls	.L28
+ 140:jsmn.c        ****              i++) {
+ 427              		.loc 1 140 0 discriminator 3
+ 428 00e4 0D5D     		ldrb	r5, [r1, r4]	@ zero_extendqisi2
+ 429 00e6 002D     		cmp	r5, #0
+ 430 00e8 E0D1     		bne	.L29
+ 431              	.L28:
+ 150:jsmn.c        ****         }
+ 151:jsmn.c        ****         parser->pos--;
+ 432              		.loc 1 151 0 is_stmt 1
+ 433 00ea 0468     		ldr	r4, [r0]
+ 434 00ec 013C     		subs	r4, r4, #1
+ 435 00ee 0460     		str	r4, [r0]
+ 152:jsmn.c        ****         break;
+ 436              		.loc 1 152 0
+ 437 00f0 03E0     		b	.L22
+ 438              	.LVL35:
+ 439              	.L23:
+ 153:jsmn.c        ****       /* Unexpected symbol */
+ 154:jsmn.c        ****       default:
+ 155:jsmn.c        ****         parser->pos = start;
+ 440              		.loc 1 155 0
+ 441 00f2 0660     		str	r6, [r0]
+ 156:jsmn.c        ****         return JSMN_ERROR_INVAL;
+ 442              		.loc 1 156 0
+ 443 00f4 6FF00100 		mvn	r0, #1
+ 444              	.LVL36:
+ 445 00f8 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 446              	.LVL37:
+ 447              	.L22:
+ 448              	.LBE3:
+ 449              	.LBE2:
+ 102:jsmn.c        ****     char c = js[parser->pos];
+ 450              		.loc 1 102 0
+ 451 00fa 0468     		ldr	r4, [r0]
+ 452 00fc 0134     		adds	r4, r4, #1
+ 453 00fe 0460     		str	r4, [r0]
+ 454              	.L18:
+ 102:jsmn.c        ****     char c = js[parser->pos];
+ 455              		.loc 1 102 0 is_stmt 0 discriminator 1
+ 456 0100 0468     		ldr	r4, [r0]
+ 457 0102 9442     		cmp	r4, r2
+ 458 0104 03D2     		bcs	.L30
+ 102:jsmn.c        ****     char c = js[parser->pos];
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 12
+
+
+ 459              		.loc 1 102 0 discriminator 2
+ 460 0106 0D5D     		ldrb	r5, [r1, r4]	@ zero_extendqisi2
+ 461 0108 002D     		cmp	r5, #0
+ 462 010a 7FF47EAF 		bne	.L31
+ 463              	.L30:
+ 157:jsmn.c        ****       }
+ 158:jsmn.c        ****     }
+ 159:jsmn.c        ****   }
+ 160:jsmn.c        ****   parser->pos = start;
+ 464              		.loc 1 160 0 is_stmt 1
+ 465 010e 0660     		str	r6, [r0]
+ 161:jsmn.c        ****   return JSMN_ERROR_PART;
+ 466              		.loc 1 161 0
+ 467 0110 6FF00200 		mvn	r0, #2
+ 468              	.LVL38:
+ 469 0114 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 470              	.LVL39:
+ 471              	.L32:
+ 472              	.LBB4:
+ 108:jsmn.c        ****       }
+ 473              		.loc 1 108 0
+ 474 0116 0020     		movs	r0, #0
+ 475              	.LVL40:
+ 476              	.LBE4:
+ 162:jsmn.c        **** }
+ 477              		.loc 1 162 0
+ 478 0118 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 479              		.cfi_endproc
+ 480              	.LFE3:
+ 481              		.size	jsmn_parse_string, .-jsmn_parse_string
+ 482 011a 00BF     		.section	.text.jsmn_parse,"ax",%progbits
+ 483              		.align	2
+ 484              		.global	jsmn_parse
+ 485              		.thumb
+ 486              		.thumb_func
+ 487              		.type	jsmn_parse, %function
+ 488              	jsmn_parse:
+ 489              	.LFB4:
+ 163:jsmn.c        **** 
+ 164:jsmn.c        **** /**
+ 165:jsmn.c        ****  * Parse JSON string and fill tokens.
+ 166:jsmn.c        ****  */
+ 167:jsmn.c        **** int jsmn_parse(jsmn_parser *parser, const char *js, const size_t len,
+ 168:jsmn.c        ****                jsmntok_t *tokens, const unsigned int num_tokens) {
+ 490              		.loc 1 168 0
+ 491              		.cfi_startproc
+ 492              		@ args = 4, pretend = 0, frame = 0
+ 493              		@ frame_needed = 0, uses_anonymous_args = 0
+ 494              	.LVL41:
+ 495 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 496              		.cfi_def_cfa_offset 32
+ 497              		.cfi_offset 4, -32
+ 498              		.cfi_offset 5, -28
+ 499              		.cfi_offset 6, -24
+ 500              		.cfi_offset 7, -20
+ 501              		.cfi_offset 8, -16
+ 502              		.cfi_offset 9, -12
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 13
+
+
+ 503              		.cfi_offset 10, -8
+ 504              		.cfi_offset 14, -4
+ 505 0004 82B0     		sub	sp, sp, #8
+ 506              		.cfi_def_cfa_offset 40
+ 507 0006 0646     		mov	r6, r0
+ 508 0008 8846     		mov	r8, r1
+ 509 000a 1746     		mov	r7, r2
+ 510 000c 1D46     		mov	r5, r3
+ 511 000e DDF828A0 		ldr	r10, [sp, #40]
+ 169:jsmn.c        ****   int r;
+ 170:jsmn.c        ****   int i;
+ 171:jsmn.c        ****   jsmntok_t *token;
+ 172:jsmn.c        ****   int count = parser->toknext;
+ 512              		.loc 1 172 0
+ 513 0012 D0F80490 		ldr	r9, [r0, #4]
+ 514              	.LVL42:
+ 173:jsmn.c        **** 
+ 174:jsmn.c        ****   for (; parser->pos < len && js[parser->pos] != '\0'; parser->pos++) {
+ 515              		.loc 1 174 0
+ 516 0016 D1E0     		b	.L35
+ 517              	.LVL43:
+ 518              	.L61:
+ 519              	.LBB5:
+ 175:jsmn.c        ****     char c;
+ 176:jsmn.c        ****     jsmntype_t type;
+ 177:jsmn.c        **** 
+ 178:jsmn.c        ****     c = js[parser->pos];
+ 179:jsmn.c        ****     switch (c) {
+ 520              		.loc 1 179 0
+ 521 0018 2C2C     		cmp	r4, #44
+ 522 001a 00F09280 		beq	.L37
+ 523 001e 0ED8     		bhi	.L38
+ 524 0020 0D2C     		cmp	r4, #13
+ 525 0022 00F0C880 		beq	.L39
+ 526 0026 04D8     		bhi	.L40
+ 527 0028 093C     		subs	r4, r4, #9
+ 528              	.LVL44:
+ 529 002a 012C     		cmp	r4, #1
+ 530 002c 40F2C380 		bls	.L39
+ 531 0030 ABE0     		b	.L36
+ 532              	.LVL45:
+ 533              	.L40:
+ 534 0032 202C     		cmp	r4, #32
+ 535 0034 00F0BF80 		beq	.L39
+ 536 0038 222C     		cmp	r4, #34
+ 537 003a 66D0     		beq	.L41
+ 538 003c A5E0     		b	.L36
+ 539              	.L38:
+ 540 003e 5D2C     		cmp	r4, #93
+ 541 0040 2DD0     		beq	.L42
+ 542 0042 04D8     		bhi	.L43
+ 543 0044 3A2C     		cmp	r4, #58
+ 544 0046 78D0     		beq	.L44
+ 545 0048 5B2C     		cmp	r4, #91
+ 546 004a 05D0     		beq	.L45
+ 547 004c 9DE0     		b	.L36
+ 548              	.L43:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 14
+
+
+ 549 004e 7B2C     		cmp	r4, #123
+ 550 0050 02D0     		beq	.L45
+ 551 0052 7D2C     		cmp	r4, #125
+ 552 0054 23D0     		beq	.L42
+ 553 0056 98E0     		b	.L36
+ 554              	.L45:
+ 180:jsmn.c        ****     case '{': //Encounters start of object or string
+ 181:jsmn.c        ****     case '[':
+ 182:jsmn.c        ****       count++;
+ 555              		.loc 1 182 0
+ 556 0058 09F10109 		add	r9, r9, #1
+ 557              	.LVL46:
+ 183:jsmn.c        ****       if (tokens == NULL) {
+ 558              		.loc 1 183 0
+ 559 005c 002D     		cmp	r5, #0
+ 560 005e 00F0AA80 		beq	.L39
+ 184:jsmn.c        ****         break;
+ 185:jsmn.c        ****       }
+ 186:jsmn.c        ****       token = jsmn_alloc_token(parser, tokens, num_tokens);
+ 561              		.loc 1 186 0
+ 562 0062 5246     		mov	r2, r10
+ 563 0064 2946     		mov	r1, r5
+ 564 0066 3046     		mov	r0, r6
+ 565 0068 FFF7FEFF 		bl	jsmn_alloc_token
+ 566              	.LVL47:
+ 187:jsmn.c        ****       if (token == NULL) {
+ 567              		.loc 1 187 0
+ 568 006c 0146     		mov	r1, r0
+ 569 006e 0028     		cmp	r0, #0
+ 570 0070 00F0BF80 		beq	.L65
+ 188:jsmn.c        ****         return JSMN_ERROR_NOMEM;
+ 189:jsmn.c        ****       }
+ 190:jsmn.c        ****       if (parser->toksuper != -1) {
+ 571              		.loc 1 190 0
+ 572 0074 B368     		ldr	r3, [r6, #8]
+ 573 0076 B3F1FF3F 		cmp	r3, #-1
+ 574 007a 04D0     		beq	.L47
+ 575              	.LBB6:
+ 191:jsmn.c        ****         jsmntok_t *t = &tokens[parser->toksuper];
+ 576              		.loc 1 191 0
+ 577 007c 05EB0313 		add	r3, r5, r3, lsl #4
+ 578              	.LVL48:
+ 192:jsmn.c        **** #ifdef JSMN_STRICT
+ 193:jsmn.c        ****         /* In strict mode an object or array can't become a key */
+ 194:jsmn.c        ****         if (t->type == JSMN_OBJECT) {
+ 195:jsmn.c        ****           return JSMN_ERROR_INVAL;
+ 196:jsmn.c        ****         }
+ 197:jsmn.c        **** #endif
+ 198:jsmn.c        ****         t->size++;
+ 579              		.loc 1 198 0
+ 580 0080 DA68     		ldr	r2, [r3, #12]
+ 581 0082 0132     		adds	r2, r2, #1
+ 582 0084 DA60     		str	r2, [r3, #12]
+ 583              	.LVL49:
+ 584              	.L47:
+ 585              	.LBE6:
+ 199:jsmn.c        **** #ifdef JSMN_PARENT_LINKS
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 15
+
+
+ 200:jsmn.c        ****         token->parent = parser->toksuper;
+ 201:jsmn.c        **** #endif
+ 202:jsmn.c        ****       }
+ 203:jsmn.c        ****       token->type = (c == '{' ? JSMN_OBJECT : JSMN_ARRAY);
+ 586              		.loc 1 203 0
+ 587 0086 7B2C     		cmp	r4, #123
+ 588 0088 01D1     		bne	.L66
+ 589 008a 0123     		movs	r3, #1
+ 590 008c 00E0     		b	.L48
+ 591              	.L66:
+ 592 008e 0223     		movs	r3, #2
+ 593              	.L48:
+ 594              		.loc 1 203 0 is_stmt 0 discriminator 4
+ 595 0090 0B70     		strb	r3, [r1]
+ 204:jsmn.c        ****       token->start = parser->pos;
+ 596              		.loc 1 204 0 is_stmt 1 discriminator 4
+ 597 0092 3368     		ldr	r3, [r6]
+ 598 0094 4B60     		str	r3, [r1, #4]
+ 205:jsmn.c        ****       parser->toksuper = parser->toknext - 1; //Sets the current token as the new parent
+ 599              		.loc 1 205 0 discriminator 4
+ 600 0096 7368     		ldr	r3, [r6, #4]
+ 601 0098 013B     		subs	r3, r3, #1
+ 602 009a B360     		str	r3, [r6, #8]
+ 206:jsmn.c        ****       break;
+ 603              		.loc 1 206 0 discriminator 4
+ 604 009c 8BE0     		b	.L39
+ 605              	.LVL50:
+ 606              	.L42:
+ 207:jsmn.c        ****     case '}': //End of object or array
+ 208:jsmn.c        ****     case ']':
+ 209:jsmn.c        ****       if (tokens == NULL) {
+ 607              		.loc 1 209 0
+ 608 009e 002D     		cmp	r5, #0
+ 609 00a0 00F08980 		beq	.L39
+ 210:jsmn.c        ****         break;
+ 211:jsmn.c        ****       }
+ 212:jsmn.c        ****       type = (c == '}' ? JSMN_OBJECT : JSMN_ARRAY);
+ 610              		.loc 1 212 0
+ 611 00a4 7D2C     		cmp	r4, #125
+ 612 00a6 01D1     		bne	.L67
+ 613 00a8 0124     		movs	r4, #1
+ 614              	.LVL51:
+ 615 00aa 00E0     		b	.L49
+ 616              	.LVL52:
+ 617              	.L67:
+ 618 00ac 0224     		movs	r4, #2
+ 619              	.LVL53:
+ 620              	.L49:
+ 213:jsmn.c        **** #ifdef JSMN_PARENT_LINKS
+ 214:jsmn.c        ****       if (parser->toknext < 1) {
+ 215:jsmn.c        ****         return JSMN_ERROR_INVAL;
+ 216:jsmn.c        ****       }
+ 217:jsmn.c        ****       token = &tokens[parser->toknext - 1];
+ 218:jsmn.c        ****       for (;;) {
+ 219:jsmn.c        ****         if (token->start != -1 && token->end == -1) {
+ 220:jsmn.c        ****           if (token->type != type) {
+ 221:jsmn.c        ****             return JSMN_ERROR_INVAL;
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 16
+
+
+ 222:jsmn.c        ****           }
+ 223:jsmn.c        ****           token->end = parser->pos + 1;
+ 224:jsmn.c        ****           parser->toksuper = token->parent;
+ 225:jsmn.c        ****           break;
+ 226:jsmn.c        ****         }
+ 227:jsmn.c        ****         if (token->parent == -1) {
+ 228:jsmn.c        ****           if (token->type != type || parser->toksuper == -1) {
+ 229:jsmn.c        ****             return JSMN_ERROR_INVAL;
+ 230:jsmn.c        ****           }
+ 231:jsmn.c        ****           break;
+ 232:jsmn.c        ****         }
+ 233:jsmn.c        ****         token = &tokens[token->parent];
+ 234:jsmn.c        ****       }
+ 235:jsmn.c        **** #else
+ 236:jsmn.c        ****       for (i = parser->toknext - 1; i >= 0; i--) {
+ 621              		.loc 1 236 0 discriminator 4
+ 622 00ae 7368     		ldr	r3, [r6, #4]
+ 623 00b0 013B     		subs	r3, r3, #1
+ 624              	.LVL54:
+ 625 00b2 14E0     		b	.L50
+ 626              	.L53:
+ 237:jsmn.c        ****         token = &tokens[i];
+ 627              		.loc 1 237 0
+ 628 00b4 05EB0312 		add	r2, r5, r3, lsl #4
+ 629              	.LVL55:
+ 238:jsmn.c        ****         if (token->start != -1 && token->end == -1) {
+ 630              		.loc 1 238 0
+ 631 00b8 5068     		ldr	r0, [r2, #4]
+ 632 00ba B0F1FF3F 		cmp	r0, #-1
+ 633 00be 0DD0     		beq	.L51
+ 634              		.loc 1 238 0 is_stmt 0 discriminator 1
+ 635 00c0 9068     		ldr	r0, [r2, #8]
+ 636 00c2 B0F1FF3F 		cmp	r0, #-1
+ 637 00c6 09D1     		bne	.L51
+ 239:jsmn.c        ****           if (token->type != type) {
+ 638              		.loc 1 239 0 is_stmt 1
+ 639 00c8 1078     		ldrb	r0, [r2]	@ zero_extendqisi2
+ 640 00ca 8442     		cmp	r4, r0
+ 641 00cc 40F09480 		bne	.L68
+ 240:jsmn.c        ****             return JSMN_ERROR_INVAL;
+ 241:jsmn.c        ****           }
+ 242:jsmn.c        ****           parser->toksuper = -1;
+ 642              		.loc 1 242 0
+ 643 00d0 4FF0FF30 		mov	r0, #-1
+ 644 00d4 B060     		str	r0, [r6, #8]
+ 243:jsmn.c        ****           token->end = parser->pos + 1;
+ 645              		.loc 1 243 0
+ 646 00d6 0131     		adds	r1, r1, #1
+ 647 00d8 9160     		str	r1, [r2, #8]
+ 244:jsmn.c        ****           break;
+ 648              		.loc 1 244 0
+ 649 00da 02E0     		b	.L52
+ 650              	.L51:
+ 236:jsmn.c        ****         token = &tokens[i];
+ 651              		.loc 1 236 0 discriminator 2
+ 652 00dc 013B     		subs	r3, r3, #1
+ 653              	.LVL56:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 17
+
+
+ 654              	.L50:
+ 236:jsmn.c        ****         token = &tokens[i];
+ 655              		.loc 1 236 0 is_stmt 0 discriminator 1
+ 656 00de 002B     		cmp	r3, #0
+ 657 00e0 E8DA     		bge	.L53
+ 658              	.L52:
+ 245:jsmn.c        ****         }
+ 246:jsmn.c        ****       }
+ 247:jsmn.c        ****       /* Error if unmatched closing bracket */
+ 248:jsmn.c        ****       if (i == -1) {
+ 659              		.loc 1 248 0 is_stmt 1
+ 660 00e2 B3F1FF3F 		cmp	r3, #-1
+ 661 00e6 0DD1     		bne	.L54
+ 662 00e8 89E0     		b	.L69
+ 663              	.L56:
+ 249:jsmn.c        ****         return JSMN_ERROR_INVAL;
+ 250:jsmn.c        ****       }
+ 251:jsmn.c        ****       for (; i >= 0; i--) {
+ 252:jsmn.c        ****         token = &tokens[i];
+ 664              		.loc 1 252 0
+ 665 00ea 05EB0312 		add	r2, r5, r3, lsl #4
+ 666              	.LVL57:
+ 253:jsmn.c        ****         if (token->start != -1 && token->end == -1) {
+ 667              		.loc 1 253 0
+ 668 00ee 5168     		ldr	r1, [r2, #4]
+ 669 00f0 B1F1FF3F 		cmp	r1, #-1
+ 670 00f4 05D0     		beq	.L55
+ 671              		.loc 1 253 0 is_stmt 0 discriminator 1
+ 672 00f6 9268     		ldr	r2, [r2, #8]
+ 673              	.LVL58:
+ 674 00f8 B2F1FF3F 		cmp	r2, #-1
+ 675 00fc 01D1     		bne	.L55
+ 254:jsmn.c        ****           parser->toksuper = i;
+ 676              		.loc 1 254 0 is_stmt 1
+ 677 00fe B360     		str	r3, [r6, #8]
+ 255:jsmn.c        ****           break;
+ 678              		.loc 1 255 0
+ 679 0100 59E0     		b	.L39
+ 680              	.L55:
+ 251:jsmn.c        ****         token = &tokens[i];
+ 681              		.loc 1 251 0
+ 682 0102 013B     		subs	r3, r3, #1
+ 683              	.LVL59:
+ 684              	.L54:
+ 251:jsmn.c        ****         token = &tokens[i];
+ 685              		.loc 1 251 0 is_stmt 0 discriminator 1
+ 686 0104 002B     		cmp	r3, #0
+ 687 0106 F0DA     		bge	.L56
+ 688 0108 55E0     		b	.L39
+ 689              	.LVL60:
+ 690              	.L41:
+ 256:jsmn.c        ****         }
+ 257:jsmn.c        ****       }
+ 258:jsmn.c        **** #endif
+ 259:jsmn.c        ****       break;
+ 260:jsmn.c        ****     case '\"': //Encounters start of the string
+ 261:jsmn.c        ****       r = jsmn_parse_string(parser, js, len, tokens, num_tokens);
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 18
+
+
+ 691              		.loc 1 261 0 is_stmt 1
+ 692 010a CDF800A0 		str	r10, [sp]
+ 693 010e 2B46     		mov	r3, r5
+ 694 0110 3A46     		mov	r2, r7
+ 695 0112 4146     		mov	r1, r8
+ 696 0114 3046     		mov	r0, r6
+ 697 0116 FFF7FEFF 		bl	jsmn_parse_string
+ 698              	.LVL61:
+ 262:jsmn.c        ****       if (r < 0) {
+ 699              		.loc 1 262 0
+ 700 011a 0028     		cmp	r0, #0
+ 701 011c 76DB     		blt	.L46
+ 263:jsmn.c        ****         return r;
+ 264:jsmn.c        ****       }
+ 265:jsmn.c        ****       count++;
+ 702              		.loc 1 265 0
+ 703 011e 09F10109 		add	r9, r9, #1
+ 704              	.LVL62:
+ 266:jsmn.c        ****       if (parser->toksuper != -1 && tokens != NULL) {
+ 705              		.loc 1 266 0
+ 706 0122 B368     		ldr	r3, [r6, #8]
+ 707 0124 B3F1FF3F 		cmp	r3, #-1
+ 708 0128 45D0     		beq	.L39
+ 709              		.loc 1 266 0 is_stmt 0 discriminator 1
+ 710 012a 002D     		cmp	r5, #0
+ 711 012c 43D0     		beq	.L39
+ 267:jsmn.c        ****         tokens[parser->toksuper].size++;
+ 712              		.loc 1 267 0 is_stmt 1
+ 713 012e 05EB0313 		add	r3, r5, r3, lsl #4
+ 714 0132 DA68     		ldr	r2, [r3, #12]
+ 715 0134 0132     		adds	r2, r2, #1
+ 716 0136 DA60     		str	r2, [r3, #12]
+ 717 0138 3DE0     		b	.L39
+ 718              	.LVL63:
+ 719              	.L44:
+ 268:jsmn.c        ****       }
+ 269:jsmn.c        ****       break;
+ 270:jsmn.c        ****     case '\t':
+ 271:jsmn.c        ****     case '\r':
+ 272:jsmn.c        ****     case '\n':
+ 273:jsmn.c        ****     case ' ':
+ 274:jsmn.c        ****       break;
+ 275:jsmn.c        ****     case ':': //Separates keys and values
+ 276:jsmn.c        ****       parser->toksuper = parser->toknext - 1; //This sets the current token as the parent for the v
+ 720              		.loc 1 276 0
+ 721 013a 7368     		ldr	r3, [r6, #4]
+ 722 013c 013B     		subs	r3, r3, #1
+ 723 013e B360     		str	r3, [r6, #8]
+ 277:jsmn.c        ****       break;
+ 724              		.loc 1 277 0
+ 725 0140 39E0     		b	.L39
+ 726              	.L37:
+ 278:jsmn.c        ****     case ',': //Separates elements in arrays and key value pairs
+ 279:jsmn.c        ****       if (tokens != NULL && parser->toksuper != -1 &&
+ 727              		.loc 1 279 0
+ 728 0142 002D     		cmp	r5, #0
+ 729 0144 37D0     		beq	.L39
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 19
+
+
+ 730              		.loc 1 279 0 is_stmt 0 discriminator 1
+ 731 0146 B368     		ldr	r3, [r6, #8]
+ 732 0148 B3F1FF3F 		cmp	r3, #-1
+ 733 014c 33D0     		beq	.L39
+ 280:jsmn.c        ****           tokens[parser->toksuper].type != JSMN_ARRAY &&
+ 734              		.loc 1 280 0 is_stmt 1 discriminator 2
+ 735 014e 1B01     		lsls	r3, r3, #4
+ 736 0150 EB5C     		ldrb	r3, [r5, r3]	@ zero_extendqisi2
+ 279:jsmn.c        ****           tokens[parser->toksuper].type != JSMN_ARRAY &&
+ 737              		.loc 1 279 0 discriminator 2
+ 738 0152 022B     		cmp	r3, #2
+ 739 0154 2FD0     		beq	.L39
+ 740              		.loc 1 280 0
+ 741 0156 012B     		cmp	r3, #1
+ 742 0158 2DD0     		beq	.L39
+ 281:jsmn.c        ****           tokens[parser->toksuper].type != JSMN_OBJECT) {
+ 282:jsmn.c        **** #ifdef JSMN_PARENT_LINKS
+ 283:jsmn.c        ****         parser->toksuper = tokens[parser->toksuper].parent;
+ 284:jsmn.c        **** #else
+ 285:jsmn.c        ****         for (i = parser->toknext - 1; i >= 0; i--) {
+ 743              		.loc 1 285 0
+ 744 015a 7268     		ldr	r2, [r6, #4]
+ 745 015c 013A     		subs	r2, r2, #1
+ 746              	.LVL64:
+ 747 015e 11E0     		b	.L57
+ 748              	.L59:
+ 286:jsmn.c        ****           if (tokens[i].type == JSMN_ARRAY || tokens[i].type == JSMN_OBJECT) {
+ 749              		.loc 1 286 0
+ 750 0160 1301     		lsls	r3, r2, #4
+ 751 0162 E918     		adds	r1, r5, r3
+ 752 0164 EB5C     		ldrb	r3, [r5, r3]	@ zero_extendqisi2
+ 753 0166 013B     		subs	r3, r3, #1
+ 754 0168 DBB2     		uxtb	r3, r3
+ 755 016a 012B     		cmp	r3, #1
+ 756 016c 09D8     		bhi	.L58
+ 287:jsmn.c        ****             if (tokens[i].start != -1 && tokens[i].end == -1) {
+ 757              		.loc 1 287 0
+ 758 016e 4B68     		ldr	r3, [r1, #4]
+ 759 0170 B3F1FF3F 		cmp	r3, #-1
+ 760 0174 05D0     		beq	.L58
+ 761              		.loc 1 287 0 is_stmt 0 discriminator 1
+ 762 0176 8B68     		ldr	r3, [r1, #8]
+ 763 0178 B3F1FF3F 		cmp	r3, #-1
+ 764 017c 01D1     		bne	.L58
+ 288:jsmn.c        ****               parser->toksuper = i; //Update the parent token
+ 765              		.loc 1 288 0 is_stmt 1
+ 766 017e B260     		str	r2, [r6, #8]
+ 289:jsmn.c        ****               break;
+ 767              		.loc 1 289 0
+ 768 0180 19E0     		b	.L39
+ 769              	.L58:
+ 285:jsmn.c        ****           if (tokens[i].type == JSMN_ARRAY || tokens[i].type == JSMN_OBJECT) {
+ 770              		.loc 1 285 0 discriminator 2
+ 771 0182 013A     		subs	r2, r2, #1
+ 772              	.LVL65:
+ 773              	.L57:
+ 285:jsmn.c        ****           if (tokens[i].type == JSMN_ARRAY || tokens[i].type == JSMN_OBJECT) {
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 20
+
+
+ 774              		.loc 1 285 0 is_stmt 0 discriminator 1
+ 775 0184 002A     		cmp	r2, #0
+ 776 0186 EBDA     		bge	.L59
+ 777 0188 15E0     		b	.L39
+ 778              	.LVL66:
+ 779              	.L36:
+ 290:jsmn.c        ****             }
+ 291:jsmn.c        ****           }
+ 292:jsmn.c        ****         }
+ 293:jsmn.c        **** #endif
+ 294:jsmn.c        ****       }
+ 295:jsmn.c        ****       break;
+ 296:jsmn.c        **** #ifdef JSMN_STRICT
+ 297:jsmn.c        ****     /* In strict mode primitives are: numbers and booleans */
+ 298:jsmn.c        ****     case '-':
+ 299:jsmn.c        ****     case '0':
+ 300:jsmn.c        ****     case '1':
+ 301:jsmn.c        ****     case '2':
+ 302:jsmn.c        ****     case '3':
+ 303:jsmn.c        ****     case '4':
+ 304:jsmn.c        ****     case '5':
+ 305:jsmn.c        ****     case '6':
+ 306:jsmn.c        ****     case '7':
+ 307:jsmn.c        ****     case '8':
+ 308:jsmn.c        ****     case '9':
+ 309:jsmn.c        ****     case 't':
+ 310:jsmn.c        ****     case 'f':
+ 311:jsmn.c        ****     case 'n':
+ 312:jsmn.c        ****       /* And they must not be keys of the object */
+ 313:jsmn.c        ****       if (tokens != NULL && parser->toksuper != -1) {
+ 314:jsmn.c        ****         const jsmntok_t *t = &tokens[parser->toksuper];
+ 315:jsmn.c        ****         if (t->type == JSMN_OBJECT ||
+ 316:jsmn.c        ****             (t->type == JSMN_STRING && t->size != 0)) {
+ 317:jsmn.c        ****           return JSMN_ERROR_INVAL;
+ 318:jsmn.c        ****         }
+ 319:jsmn.c        ****       }
+ 320:jsmn.c        **** #else
+ 321:jsmn.c        ****     /* In non-strict mode every unquoted value is a primitive */
+ 322:jsmn.c        ****     default:
+ 323:jsmn.c        **** #endif
+ 324:jsmn.c        ****       r = jsmn_parse_primitive(parser, js, len, tokens, num_tokens);
+ 780              		.loc 1 324 0 is_stmt 1
+ 781 018a CDF800A0 		str	r10, [sp]
+ 782 018e 2B46     		mov	r3, r5
+ 783 0190 3A46     		mov	r2, r7
+ 784 0192 4146     		mov	r1, r8
+ 785 0194 3046     		mov	r0, r6
+ 786 0196 FFF7FEFF 		bl	jsmn_parse_primitive
+ 787              	.LVL67:
+ 325:jsmn.c        ****       if (r < 0) {
+ 788              		.loc 1 325 0
+ 789 019a 0028     		cmp	r0, #0
+ 790 019c 36DB     		blt	.L46
+ 326:jsmn.c        ****         return r;
+ 327:jsmn.c        ****       }
+ 328:jsmn.c        ****       count++;
+ 791              		.loc 1 328 0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 21
+
+
+ 792 019e 09F10109 		add	r9, r9, #1
+ 793              	.LVL68:
+ 329:jsmn.c        ****       if (parser->toksuper != -1 && tokens != NULL) {
+ 794              		.loc 1 329 0
+ 795 01a2 B368     		ldr	r3, [r6, #8]
+ 796 01a4 B3F1FF3F 		cmp	r3, #-1
+ 797 01a8 05D0     		beq	.L39
+ 798              		.loc 1 329 0 is_stmt 0 discriminator 1
+ 799 01aa 25B1     		cbz	r5, .L39
+ 330:jsmn.c        ****         tokens[parser->toksuper].size++;
+ 800              		.loc 1 330 0 is_stmt 1
+ 801 01ac 05EB0313 		add	r3, r5, r3, lsl #4
+ 802 01b0 DA68     		ldr	r2, [r3, #12]
+ 803 01b2 0132     		adds	r2, r2, #1
+ 804 01b4 DA60     		str	r2, [r3, #12]
+ 805              	.LVL69:
+ 806              	.L39:
+ 807              	.LBE5:
+ 174:jsmn.c        ****     char c;
+ 808              		.loc 1 174 0
+ 809 01b6 3368     		ldr	r3, [r6]
+ 810 01b8 0133     		adds	r3, r3, #1
+ 811 01ba 3360     		str	r3, [r6]
+ 812              	.L35:
+ 174:jsmn.c        ****     char c;
+ 813              		.loc 1 174 0 is_stmt 0 discriminator 1
+ 814 01bc 3168     		ldr	r1, [r6]
+ 815 01be B942     		cmp	r1, r7
+ 816 01c0 04D2     		bcs	.L60
+ 174:jsmn.c        ****     char c;
+ 817              		.loc 1 174 0 discriminator 2
+ 818 01c2 18F80140 		ldrb	r4, [r8, r1]	@ zero_extendqisi2
+ 819 01c6 002C     		cmp	r4, #0
+ 820 01c8 7FF426AF 		bne	.L61
+ 821              	.L60:
+ 331:jsmn.c        ****       }
+ 332:jsmn.c        ****       break;
+ 333:jsmn.c        **** 
+ 334:jsmn.c        **** #ifdef JSMN_STRICT
+ 335:jsmn.c        ****     /* Unexpected char in strict mode */
+ 336:jsmn.c        ****     default:
+ 337:jsmn.c        ****       return JSMN_ERROR_INVAL;
+ 338:jsmn.c        **** #endif
+ 339:jsmn.c        ****     }
+ 340:jsmn.c        ****   }
+ 341:jsmn.c        **** 
+ 342:jsmn.c        ****   if (tokens != NULL) {
+ 822              		.loc 1 342 0 is_stmt 1
+ 823 01cc D5B1     		cbz	r5, .L72
+ 343:jsmn.c        ****     for (i = parser->toknext - 1; i >= 0; i--) {
+ 824              		.loc 1 343 0
+ 825 01ce 7368     		ldr	r3, [r6, #4]
+ 826 01d0 013B     		subs	r3, r3, #1
+ 827              	.LVL70:
+ 828 01d2 0AE0     		b	.L62
+ 829              	.L64:
+ 344:jsmn.c        ****       /* Unmatched opened object or array */
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 22
+
+
+ 345:jsmn.c        ****       if (tokens[i].start != -1 && tokens[i].end == -1) {
+ 830              		.loc 1 345 0
+ 831 01d4 05EB0312 		add	r2, r5, r3, lsl #4
+ 832 01d8 5168     		ldr	r1, [r2, #4]
+ 833 01da B1F1FF3F 		cmp	r1, #-1
+ 834 01de 03D0     		beq	.L63
+ 835              		.loc 1 345 0 is_stmt 0 discriminator 1
+ 836 01e0 9268     		ldr	r2, [r2, #8]
+ 837 01e2 B2F1FF3F 		cmp	r2, #-1
+ 838 01e6 0FD0     		beq	.L73
+ 839              	.L63:
+ 343:jsmn.c        ****     for (i = parser->toknext - 1; i >= 0; i--) {
+ 840              		.loc 1 343 0 is_stmt 1 discriminator 2
+ 841 01e8 013B     		subs	r3, r3, #1
+ 842              	.LVL71:
+ 843              	.L62:
+ 343:jsmn.c        ****     for (i = parser->toknext - 1; i >= 0; i--) {
+ 844              		.loc 1 343 0 is_stmt 0 discriminator 1
+ 845 01ea 002B     		cmp	r3, #0
+ 846 01ec F2DA     		bge	.L64
+ 346:jsmn.c        ****         return JSMN_ERROR_PART;
+ 347:jsmn.c        ****       }
+ 348:jsmn.c        ****     }
+ 349:jsmn.c        ****   }
+ 350:jsmn.c        **** 
+ 351:jsmn.c        ****   return count;
+ 847              		.loc 1 351 0 is_stmt 1
+ 848 01ee 4846     		mov	r0, r9
+ 849 01f0 0CE0     		b	.L46
+ 850              	.LVL72:
+ 851              	.L65:
+ 852              	.LBB7:
+ 188:jsmn.c        ****       }
+ 853              		.loc 1 188 0
+ 854 01f2 4FF0FF30 		mov	r0, #-1
+ 855              	.LVL73:
+ 856 01f6 09E0     		b	.L46
+ 857              	.LVL74:
+ 858              	.L68:
+ 240:jsmn.c        ****           }
+ 859              		.loc 1 240 0
+ 860 01f8 6FF00100 		mvn	r0, #1
+ 861 01fc 06E0     		b	.L46
+ 862              	.LVL75:
+ 863              	.L69:
+ 249:jsmn.c        ****       }
+ 864              		.loc 1 249 0
+ 865 01fe 6FF00100 		mvn	r0, #1
+ 866 0202 03E0     		b	.L46
+ 867              	.LVL76:
+ 868              	.L72:
+ 869              	.LBE7:
+ 870              		.loc 1 351 0
+ 871 0204 4846     		mov	r0, r9
+ 872 0206 01E0     		b	.L46
+ 873              	.LVL77:
+ 874              	.L73:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 23
+
+
+ 346:jsmn.c        ****       }
+ 875              		.loc 1 346 0
+ 876 0208 6FF00200 		mvn	r0, #2
+ 877              	.LVL78:
+ 878              	.L46:
+ 352:jsmn.c        **** }
+ 879              		.loc 1 352 0
+ 880 020c 02B0     		add	sp, sp, #8
+ 881              		.cfi_def_cfa_offset 32
+ 882              		@ sp needed
+ 883 020e BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 884              		.cfi_endproc
+ 885              	.LFE4:
+ 886              		.size	jsmn_parse, .-jsmn_parse
+ 887 0212 00BF     		.section	.text.jsmn_init,"ax",%progbits
+ 888              		.align	2
+ 889              		.global	jsmn_init
+ 890              		.thumb
+ 891              		.thumb_func
+ 892              		.type	jsmn_init, %function
+ 893              	jsmn_init:
+ 894              	.LFB5:
+ 353:jsmn.c        **** 
+ 354:jsmn.c        **** /**
+ 355:jsmn.c        ****  * Creates a new parser based over a given buffer with an array of tokens
+ 356:jsmn.c        ****  * available.
+ 357:jsmn.c        ****  */
+ 358:jsmn.c        **** void jsmn_init(jsmn_parser *parser) {
+ 895              		.loc 1 358 0
+ 896              		.cfi_startproc
+ 897              		@ args = 0, pretend = 0, frame = 0
+ 898              		@ frame_needed = 0, uses_anonymous_args = 0
+ 899              		@ link register save eliminated.
+ 900              	.LVL79:
+ 359:jsmn.c        ****   parser->pos = 0;
+ 901              		.loc 1 359 0
+ 902 0000 0023     		movs	r3, #0
+ 903 0002 0360     		str	r3, [r0]
+ 360:jsmn.c        ****   parser->toknext = 0;
+ 904              		.loc 1 360 0
+ 905 0004 4360     		str	r3, [r0, #4]
+ 361:jsmn.c        ****   parser->toksuper = -1;
+ 906              		.loc 1 361 0
+ 907 0006 4FF0FF33 		mov	r3, #-1
+ 908 000a 8360     		str	r3, [r0, #8]
+ 909 000c 7047     		bx	lr
+ 910              		.cfi_endproc
+ 911              	.LFE5:
+ 912              		.size	jsmn_init, .-jsmn_init
+ 913 000e 00BF     		.text
+ 914              	.Letext0:
+ 915              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 916              		.file 3 "jsmn.h"
+ 917              		.section	.debug_info,"",%progbits
+ 918              	.Ldebug_info0:
+ 919 0000 1A050000 		.4byte	0x51a
+ 920 0004 0400     		.2byte	0x4
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 24
+
+
+ 921 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 922 000a 04       		.byte	0x4
+ 923 000b 01       		.uleb128 0x1
+ 924 000c 70000000 		.4byte	.LASF32
+ 925 0010 0C       		.byte	0xc
+ 926 0011 10000000 		.4byte	.LASF33
+ 927 0015 AC010000 		.4byte	.LASF34
+ 928 0019 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 929 001d 00000000 		.4byte	0
+ 930 0021 00000000 		.4byte	.Ldebug_line0
+ 931 0025 02       		.uleb128 0x2
+ 932 0026 04       		.byte	0x4
+ 933 0027 05       		.byte	0x5
+ 934 0028 696E7400 		.ascii	"int\000"
+ 935 002c 03       		.uleb128 0x3
+ 936 002d 2A010000 		.4byte	.LASF9
+ 937 0031 02       		.byte	0x2
+ 938 0032 D8       		.byte	0xd8
+ 939 0033 37000000 		.4byte	0x37
+ 940 0037 04       		.uleb128 0x4
+ 941 0038 04       		.byte	0x4
+ 942 0039 07       		.byte	0x7
+ 943 003a 73010000 		.4byte	.LASF0
+ 944 003e 04       		.uleb128 0x4
+ 945 003f 08       		.byte	0x8
+ 946 0040 05       		.byte	0x5
+ 947 0041 9E010000 		.4byte	.LASF1
+ 948 0045 04       		.uleb128 0x4
+ 949 0046 08       		.byte	0x8
+ 950 0047 04       		.byte	0x4
+ 951 0048 19020000 		.4byte	.LASF2
+ 952 004c 05       		.uleb128 0x5
+ 953 004d 01       		.byte	0x1
+ 954 004e 77000000 		.4byte	0x77
+ 955 0052 03       		.byte	0x3
+ 956 0053 11       		.byte	0x11
+ 957 0054 77000000 		.4byte	0x77
+ 958 0058 06       		.uleb128 0x6
+ 959 0059 FE000000 		.4byte	.LASF3
+ 960 005d 00       		.byte	0
+ 961 005e 06       		.uleb128 0x6
+ 962 005f 26000000 		.4byte	.LASF4
+ 963 0063 01       		.byte	0x1
+ 964 0064 06       		.uleb128 0x6
+ 965 0065 31010000 		.4byte	.LASF5
+ 966 0069 02       		.byte	0x2
+ 967 006a 06       		.uleb128 0x6
+ 968 006b 87010000 		.4byte	.LASF6
+ 969 006f 04       		.byte	0x4
+ 970 0070 06       		.uleb128 0x6
+ 971 0071 57020000 		.4byte	.LASF7
+ 972 0075 08       		.byte	0x8
+ 973 0076 00       		.byte	0
+ 974 0077 04       		.uleb128 0x4
+ 975 0078 01       		.byte	0x1
+ 976 0079 08       		.byte	0x8
+ 977 007a 62000000 		.4byte	.LASF8
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 25
+
+
+ 978 007e 03       		.uleb128 0x3
+ 979 007f 46010000 		.4byte	.LASF10
+ 980 0083 03       		.byte	0x3
+ 981 0084 17       		.byte	0x17
+ 982 0085 4C000000 		.4byte	0x4c
+ 983 0089 07       		.uleb128 0x7
+ 984 008a F4010000 		.4byte	.LASF35
+ 985 008e 01       		.byte	0x1
+ 986 008f AC000000 		.4byte	0xac
+ 987 0093 03       		.byte	0x3
+ 988 0094 19       		.byte	0x19
+ 989 0095 AC000000 		.4byte	0xac
+ 990 0099 08       		.uleb128 0x8
+ 991 009a 31020000 		.4byte	.LASF11
+ 992 009e 7F       		.sleb128 -1
+ 993 009f 08       		.uleb128 0x8
+ 994 00a0 62010000 		.4byte	.LASF12
+ 995 00a4 7E       		.sleb128 -2
+ 996 00a5 08       		.uleb128 0x8
+ 997 00a6 47020000 		.4byte	.LASF13
+ 998 00aa 7D       		.sleb128 -3
+ 999 00ab 00       		.byte	0
+ 1000 00ac 04       		.uleb128 0x4
+ 1001 00ad 01       		.byte	0x1
+ 1002 00ae 06       		.byte	0x6
+ 1003 00af 25020000 		.4byte	.LASF14
+ 1004 00b3 09       		.uleb128 0x9
+ 1005 00b4 22010000 		.4byte	.LASF19
+ 1006 00b8 10       		.byte	0x10
+ 1007 00b9 03       		.byte	0x3
+ 1008 00ba 28       		.byte	0x28
+ 1009 00bb F0000000 		.4byte	0xf0
+ 1010 00bf 0A       		.uleb128 0xa
+ 1011 00c0 E3010000 		.4byte	.LASF15
+ 1012 00c4 03       		.byte	0x3
+ 1013 00c5 29       		.byte	0x29
+ 1014 00c6 7E000000 		.4byte	0x7e
+ 1015 00ca 00       		.byte	0
+ 1016 00cb 0A       		.uleb128 0xa
+ 1017 00cc 32000000 		.4byte	.LASF16
+ 1018 00d0 03       		.byte	0x3
+ 1019 00d1 2A       		.byte	0x2a
+ 1020 00d2 25000000 		.4byte	0x25
+ 1021 00d6 04       		.byte	0x4
+ 1022 00d7 0B       		.uleb128 0xb
+ 1023 00d8 656E6400 		.ascii	"end\000"
+ 1024 00dc 03       		.byte	0x3
+ 1025 00dd 2B       		.byte	0x2b
+ 1026 00de 25000000 		.4byte	0x25
+ 1027 00e2 08       		.byte	0x8
+ 1028 00e3 0A       		.uleb128 0xa
+ 1029 00e4 42020000 		.4byte	.LASF17
+ 1030 00e8 03       		.byte	0x3
+ 1031 00e9 2C       		.byte	0x2c
+ 1032 00ea 25000000 		.4byte	0x25
+ 1033 00ee 0C       		.byte	0xc
+ 1034 00ef 00       		.byte	0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 26
+
+
+ 1035 00f0 03       		.uleb128 0x3
+ 1036 00f1 3C010000 		.4byte	.LASF18
+ 1037 00f5 03       		.byte	0x3
+ 1038 00f6 30       		.byte	0x30
+ 1039 00f7 B3000000 		.4byte	0xb3
+ 1040 00fb 09       		.uleb128 0x9
+ 1041 00fc E8010000 		.4byte	.LASF20
+ 1042 0100 0C       		.byte	0xc
+ 1043 0101 03       		.byte	0x3
+ 1044 0102 36       		.byte	0x36
+ 1045 0103 2C010000 		.4byte	0x12c
+ 1046 0107 0B       		.uleb128 0xb
+ 1047 0108 706F7300 		.ascii	"pos\000"
+ 1048 010c 03       		.byte	0x3
+ 1049 010d 37       		.byte	0x37
+ 1050 010e 37000000 		.4byte	0x37
+ 1051 0112 00       		.byte	0
+ 1052 0113 0A       		.uleb128 0xa
+ 1053 0114 38000000 		.4byte	.LASF21
+ 1054 0118 03       		.byte	0x3
+ 1055 0119 38       		.byte	0x38
+ 1056 011a 37000000 		.4byte	0x37
+ 1057 011e 04       		.byte	0x4
+ 1058 011f 0A       		.uleb128 0xa
+ 1059 0120 17000000 		.4byte	.LASF22
+ 1060 0124 03       		.byte	0x3
+ 1061 0125 39       		.byte	0x39
+ 1062 0126 25000000 		.4byte	0x25
+ 1063 012a 08       		.byte	0x8
+ 1064 012b 00       		.byte	0
+ 1065 012c 03       		.uleb128 0x3
+ 1066 012d E8010000 		.4byte	.LASF20
+ 1067 0131 03       		.byte	0x3
+ 1068 0132 3A       		.byte	0x3a
+ 1069 0133 FB000000 		.4byte	0xfb
+ 1070 0137 0C       		.uleb128 0xc
+ 1071 0138 46000000 		.4byte	.LASF27
+ 1072 013c 01       		.byte	0x1
+ 1073 013d 06       		.byte	0x6
+ 1074 013e 8B010000 		.4byte	0x18b
+ 1075 0142 00000000 		.4byte	.LFB0
+ 1076 0146 20000000 		.4byte	.LFE0-.LFB0
+ 1077 014a 01       		.uleb128 0x1
+ 1078 014b 9C       		.byte	0x9c
+ 1079 014c 8B010000 		.4byte	0x18b
+ 1080 0150 0D       		.uleb128 0xd
+ 1081 0151 5B010000 		.4byte	.LASF23
+ 1082 0155 01       		.byte	0x1
+ 1083 0156 06       		.byte	0x6
+ 1084 0157 91010000 		.4byte	0x191
+ 1085 015b 00000000 		.4byte	.LLST0
+ 1086 015f 0E       		.uleb128 0xe
+ 1087 0160 80010000 		.4byte	.LASF24
+ 1088 0164 01       		.byte	0x1
+ 1089 0165 06       		.byte	0x6
+ 1090 0166 8B010000 		.4byte	0x18b
+ 1091 016a 01       		.uleb128 0x1
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 27
+
+
+ 1092 016b 51       		.byte	0x51
+ 1093 016c 0D       		.uleb128 0xd
+ 1094 016d 93010000 		.4byte	.LASF25
+ 1095 0171 01       		.byte	0x1
+ 1096 0172 07       		.byte	0x7
+ 1097 0173 97010000 		.4byte	0x197
+ 1098 0177 3A000000 		.4byte	.LLST1
+ 1099 017b 0F       		.uleb128 0xf
+ 1100 017c 746F6B00 		.ascii	"tok\000"
+ 1101 0180 01       		.byte	0x1
+ 1102 0181 08       		.byte	0x8
+ 1103 0182 8B010000 		.4byte	0x18b
+ 1104 0186 66000000 		.4byte	.LLST2
+ 1105 018a 00       		.byte	0
+ 1106 018b 10       		.uleb128 0x10
+ 1107 018c 04       		.byte	0x4
+ 1108 018d F0000000 		.4byte	0xf0
+ 1109 0191 10       		.uleb128 0x10
+ 1110 0192 04       		.byte	0x4
+ 1111 0193 2C010000 		.4byte	0x12c
+ 1112 0197 11       		.uleb128 0x11
+ 1113 0198 2C000000 		.4byte	0x2c
+ 1114 019c 12       		.uleb128 0x12
+ 1115 019d 00000000 		.4byte	.LASF36
+ 1116 01a1 01       		.byte	0x1
+ 1117 01a2 18       		.byte	0x18
+ 1118 01a3 00000000 		.4byte	.LFB1
+ 1119 01a7 0C000000 		.4byte	.LFE1-.LFB1
+ 1120 01ab 01       		.uleb128 0x1
+ 1121 01ac 9C       		.byte	0x9c
+ 1122 01ad E8010000 		.4byte	0x1e8
+ 1123 01b1 0E       		.uleb128 0xe
+ 1124 01b2 0E020000 		.4byte	.LASF26
+ 1125 01b6 01       		.byte	0x1
+ 1126 01b7 18       		.byte	0x18
+ 1127 01b8 8B010000 		.4byte	0x18b
+ 1128 01bc 01       		.uleb128 0x1
+ 1129 01bd 50       		.byte	0x50
+ 1130 01be 0E       		.uleb128 0xe
+ 1131 01bf E3010000 		.4byte	.LASF15
+ 1132 01c3 01       		.byte	0x1
+ 1133 01c4 18       		.byte	0x18
+ 1134 01c5 E8010000 		.4byte	0x1e8
+ 1135 01c9 01       		.uleb128 0x1
+ 1136 01ca 51       		.byte	0x51
+ 1137 01cb 0E       		.uleb128 0xe
+ 1138 01cc 32000000 		.4byte	.LASF16
+ 1139 01d0 01       		.byte	0x1
+ 1140 01d1 19       		.byte	0x19
+ 1141 01d2 ED010000 		.4byte	0x1ed
+ 1142 01d6 01       		.uleb128 0x1
+ 1143 01d7 52       		.byte	0x52
+ 1144 01d8 13       		.uleb128 0x13
+ 1145 01d9 656E6400 		.ascii	"end\000"
+ 1146 01dd 01       		.byte	0x1
+ 1147 01de 19       		.byte	0x19
+ 1148 01df ED010000 		.4byte	0x1ed
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 28
+
+
+ 1149 01e3 79000000 		.4byte	.LLST3
+ 1150 01e7 00       		.byte	0
+ 1151 01e8 11       		.uleb128 0x11
+ 1152 01e9 7E000000 		.4byte	0x7e
+ 1153 01ed 11       		.uleb128 0x11
+ 1154 01ee 25000000 		.4byte	0x25
+ 1155 01f2 0C       		.uleb128 0xc
+ 1156 01f3 0D010000 		.4byte	.LASF28
+ 1157 01f7 01       		.byte	0x1
+ 1158 01f8 23       		.byte	0x23
+ 1159 01f9 25000000 		.4byte	0x25
+ 1160 01fd 00000000 		.4byte	.LFB2
+ 1161 0201 80000000 		.4byte	.LFE2-.LFB2
+ 1162 0205 01       		.uleb128 0x1
+ 1163 0206 9C       		.byte	0x9c
+ 1164 0207 B4020000 		.4byte	0x2b4
+ 1165 020b 0D       		.uleb128 0xd
+ 1166 020c 5B010000 		.4byte	.LASF23
+ 1167 0210 01       		.byte	0x1
+ 1168 0211 23       		.byte	0x23
+ 1169 0212 91010000 		.4byte	0x191
+ 1170 0216 98000000 		.4byte	.LLST4
+ 1171 021a 13       		.uleb128 0x13
+ 1172 021b 6A7300   		.ascii	"js\000"
+ 1173 021e 01       		.byte	0x1
+ 1174 021f 23       		.byte	0x23
+ 1175 0220 B4020000 		.4byte	0x2b4
+ 1176 0224 E8000000 		.4byte	.LLST5
+ 1177 0228 13       		.uleb128 0x13
+ 1178 0229 6C656E00 		.ascii	"len\000"
+ 1179 022d 01       		.byte	0x1
+ 1180 022e 24       		.byte	0x24
+ 1181 022f 97010000 		.4byte	0x197
+ 1182 0233 09010000 		.4byte	.LLST6
+ 1183 0237 0D       		.uleb128 0xd
+ 1184 0238 80010000 		.4byte	.LASF24
+ 1185 023c 01       		.byte	0x1
+ 1186 023d 24       		.byte	0x24
+ 1187 023e 8B010000 		.4byte	0x18b
+ 1188 0242 2A010000 		.4byte	.LLST7
+ 1189 0246 0D       		.uleb128 0xd
+ 1190 0247 93010000 		.4byte	.LASF25
+ 1191 024b 01       		.byte	0x1
+ 1192 024c 25       		.byte	0x25
+ 1193 024d 97010000 		.4byte	0x197
+ 1194 0251 4B010000 		.4byte	.LLST8
+ 1195 0255 14       		.uleb128 0x14
+ 1196 0256 0E020000 		.4byte	.LASF26
+ 1197 025a 01       		.byte	0x1
+ 1198 025b 26       		.byte	0x26
+ 1199 025c 8B010000 		.4byte	0x18b
+ 1200 0260 6B010000 		.4byte	.LLST9
+ 1201 0264 15       		.uleb128 0x15
+ 1202 0265 32000000 		.4byte	.LASF16
+ 1203 0269 01       		.byte	0x1
+ 1204 026a 27       		.byte	0x27
+ 1205 026b 25000000 		.4byte	0x25
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 29
+
+
+ 1206 026f 01       		.uleb128 0x1
+ 1207 0270 56       		.byte	0x56
+ 1208 0271 16       		.uleb128 0x16
+ 1209 0272 40000000 		.4byte	.LASF37
+ 1210 0276 01       		.byte	0x1
+ 1211 0277 47       		.byte	0x47
+ 1212 0278 4E000000 		.4byte	.L8
+ 1213 027c 17       		.uleb128 0x17
+ 1214 027d 62000000 		.4byte	.LVL15
+ 1215 0281 37010000 		.4byte	0x137
+ 1216 0285 9E020000 		.4byte	0x29e
+ 1217 0289 18       		.uleb128 0x18
+ 1218 028a 01       		.uleb128 0x1
+ 1219 028b 50       		.byte	0x50
+ 1220 028c 02       		.uleb128 0x2
+ 1221 028d 74       		.byte	0x74
+ 1222 028e 00       		.sleb128 0
+ 1223 028f 18       		.uleb128 0x18
+ 1224 0290 01       		.uleb128 0x1
+ 1225 0291 51       		.byte	0x51
+ 1226 0292 03       		.uleb128 0x3
+ 1227 0293 F3       		.byte	0xf3
+ 1228 0294 01       		.uleb128 0x1
+ 1229 0295 53       		.byte	0x53
+ 1230 0296 18       		.uleb128 0x18
+ 1231 0297 01       		.uleb128 0x1
+ 1232 0298 52       		.byte	0x52
+ 1233 0299 03       		.uleb128 0x3
+ 1234 029a 91       		.byte	0x91
+ 1235 029b 00       		.sleb128 0
+ 1236 029c 06       		.byte	0x6
+ 1237 029d 00       		.byte	0
+ 1238 029e 19       		.uleb128 0x19
+ 1239 029f 76000000 		.4byte	.LVL18
+ 1240 02a3 9C010000 		.4byte	0x19c
+ 1241 02a7 18       		.uleb128 0x18
+ 1242 02a8 01       		.uleb128 0x1
+ 1243 02a9 51       		.byte	0x51
+ 1244 02aa 01       		.uleb128 0x1
+ 1245 02ab 38       		.byte	0x38
+ 1246 02ac 18       		.uleb128 0x18
+ 1247 02ad 01       		.uleb128 0x1
+ 1248 02ae 52       		.byte	0x52
+ 1249 02af 02       		.uleb128 0x2
+ 1250 02b0 76       		.byte	0x76
+ 1251 02b1 00       		.sleb128 0
+ 1252 02b2 00       		.byte	0
+ 1253 02b3 00       		.byte	0
+ 1254 02b4 10       		.uleb128 0x10
+ 1255 02b5 04       		.byte	0x4
+ 1256 02b6 C1020000 		.4byte	0x2c1
+ 1257 02ba 04       		.uleb128 0x4
+ 1258 02bb 01       		.byte	0x1
+ 1259 02bc 08       		.byte	0x8
+ 1260 02bd 14020000 		.4byte	.LASF29
+ 1261 02c1 11       		.uleb128 0x11
+ 1262 02c2 BA020000 		.4byte	0x2ba
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 30
+
+
+ 1263 02c6 0C       		.uleb128 0xc
+ 1264 02c7 FC010000 		.4byte	.LASF30
+ 1265 02cb 01       		.byte	0x1
+ 1266 02cc 5C       		.byte	0x5c
+ 1267 02cd 25000000 		.4byte	0x25
+ 1268 02d1 00000000 		.4byte	.LFB3
+ 1269 02d5 1A010000 		.4byte	.LFE3-.LFB3
+ 1270 02d9 01       		.uleb128 0x1
+ 1271 02da 9C       		.byte	0x9c
+ 1272 02db AB030000 		.4byte	0x3ab
+ 1273 02df 0D       		.uleb128 0xd
+ 1274 02e0 5B010000 		.4byte	.LASF23
+ 1275 02e4 01       		.byte	0x1
+ 1276 02e5 5C       		.byte	0x5c
+ 1277 02e6 91010000 		.4byte	0x191
+ 1278 02ea 89010000 		.4byte	.LLST10
+ 1279 02ee 13       		.uleb128 0x13
+ 1280 02ef 6A7300   		.ascii	"js\000"
+ 1281 02f2 01       		.byte	0x1
+ 1282 02f3 5C       		.byte	0x5c
+ 1283 02f4 B4020000 		.4byte	0x2b4
+ 1284 02f8 0B020000 		.4byte	.LLST11
+ 1285 02fc 13       		.uleb128 0x13
+ 1286 02fd 6C656E00 		.ascii	"len\000"
+ 1287 0301 01       		.byte	0x1
+ 1288 0302 5D       		.byte	0x5d
+ 1289 0303 97010000 		.4byte	0x197
+ 1290 0307 37020000 		.4byte	.LLST12
+ 1291 030b 0D       		.uleb128 0xd
+ 1292 030c 80010000 		.4byte	.LASF24
+ 1293 0310 01       		.byte	0x1
+ 1294 0311 5D       		.byte	0x5d
+ 1295 0312 8B010000 		.4byte	0x18b
+ 1296 0316 63020000 		.4byte	.LLST13
+ 1297 031a 0D       		.uleb128 0xd
+ 1298 031b 93010000 		.4byte	.LASF25
+ 1299 031f 01       		.byte	0x1
+ 1300 0320 5E       		.byte	0x5e
+ 1301 0321 97010000 		.4byte	0x197
+ 1302 0325 8F020000 		.4byte	.LLST14
+ 1303 0329 14       		.uleb128 0x14
+ 1304 032a 0E020000 		.4byte	.LASF26
+ 1305 032e 01       		.byte	0x1
+ 1306 032f 5F       		.byte	0x5f
+ 1307 0330 8B010000 		.4byte	0x18b
+ 1308 0334 AF020000 		.4byte	.LLST15
+ 1309 0338 15       		.uleb128 0x15
+ 1310 0339 32000000 		.4byte	.LASF16
+ 1311 033d 01       		.byte	0x1
+ 1312 033e 61       		.byte	0x61
+ 1313 033f 25000000 		.4byte	0x25
+ 1314 0343 01       		.uleb128 0x1
+ 1315 0344 56       		.byte	0x56
+ 1316 0345 1A       		.uleb128 0x1a
+ 1317 0346 00000000 		.4byte	.Ldebug_ranges0+0
+ 1318 034a 0F       		.uleb128 0xf
+ 1319 034b 6300     		.ascii	"c\000"
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 31
+
+
+ 1320 034d 01       		.byte	0x1
+ 1321 034e 67       		.byte	0x67
+ 1322 034f BA020000 		.4byte	0x2ba
+ 1323 0353 CD020000 		.4byte	.LLST16
+ 1324 0357 1B       		.uleb128 0x1b
+ 1325 0358 40000000 		.4byte	.LBB3
+ 1326 035c BA000000 		.4byte	.LBE3-.LBB3
+ 1327 0360 72030000 		.4byte	0x372
+ 1328 0364 0F       		.uleb128 0xf
+ 1329 0365 6900     		.ascii	"i\000"
+ 1330 0367 01       		.byte	0x1
+ 1331 0368 7C       		.byte	0x7c
+ 1332 0369 25000000 		.4byte	0x25
+ 1333 036d EB020000 		.4byte	.LLST17
+ 1334 0371 00       		.byte	0
+ 1335 0372 17       		.uleb128 0x17
+ 1336 0373 1E000000 		.4byte	.LVL24
+ 1337 0377 37010000 		.4byte	0x137
+ 1338 037b 94030000 		.4byte	0x394
+ 1339 037f 18       		.uleb128 0x18
+ 1340 0380 01       		.uleb128 0x1
+ 1341 0381 50       		.byte	0x50
+ 1342 0382 02       		.uleb128 0x2
+ 1343 0383 74       		.byte	0x74
+ 1344 0384 00       		.sleb128 0
+ 1345 0385 18       		.uleb128 0x18
+ 1346 0386 01       		.uleb128 0x1
+ 1347 0387 51       		.byte	0x51
+ 1348 0388 03       		.uleb128 0x3
+ 1349 0389 F3       		.byte	0xf3
+ 1350 038a 01       		.uleb128 0x1
+ 1351 038b 53       		.byte	0x53
+ 1352 038c 18       		.uleb128 0x18
+ 1353 038d 01       		.uleb128 0x1
+ 1354 038e 52       		.byte	0x52
+ 1355 038f 03       		.uleb128 0x3
+ 1356 0390 91       		.byte	0x91
+ 1357 0391 00       		.sleb128 0
+ 1358 0392 06       		.byte	0x6
+ 1359 0393 00       		.byte	0
+ 1360 0394 19       		.uleb128 0x19
+ 1361 0395 32000000 		.4byte	.LVL27
+ 1362 0399 9C010000 		.4byte	0x19c
+ 1363 039d 18       		.uleb128 0x18
+ 1364 039e 01       		.uleb128 0x1
+ 1365 039f 51       		.byte	0x51
+ 1366 03a0 01       		.uleb128 0x1
+ 1367 03a1 34       		.byte	0x34
+ 1368 03a2 18       		.uleb128 0x18
+ 1369 03a3 01       		.uleb128 0x1
+ 1370 03a4 52       		.byte	0x52
+ 1371 03a5 02       		.uleb128 0x2
+ 1372 03a6 76       		.byte	0x76
+ 1373 03a7 01       		.sleb128 1
+ 1374 03a8 00       		.byte	0
+ 1375 03a9 00       		.byte	0
+ 1376 03aa 00       		.byte	0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 32
+
+
+ 1377 03ab 1C       		.uleb128 0x1c
+ 1378 03ac 57000000 		.4byte	.LASF38
+ 1379 03b0 01       		.byte	0x1
+ 1380 03b1 A7       		.byte	0xa7
+ 1381 03b2 25000000 		.4byte	0x25
+ 1382 03b6 00000000 		.4byte	.LFB4
+ 1383 03ba 12020000 		.4byte	.LFE4-.LFB4
+ 1384 03be 01       		.uleb128 0x1
+ 1385 03bf 9C       		.byte	0x9c
+ 1386 03c0 F7040000 		.4byte	0x4f7
+ 1387 03c4 0D       		.uleb128 0xd
+ 1388 03c5 5B010000 		.4byte	.LASF23
+ 1389 03c9 01       		.byte	0x1
+ 1390 03ca A7       		.byte	0xa7
+ 1391 03cb 91010000 		.4byte	0x191
+ 1392 03cf 0A030000 		.4byte	.LLST18
+ 1393 03d3 13       		.uleb128 0x13
+ 1394 03d4 6A7300   		.ascii	"js\000"
+ 1395 03d7 01       		.byte	0x1
+ 1396 03d8 A7       		.byte	0xa7
+ 1397 03d9 B4020000 		.4byte	0x2b4
+ 1398 03dd 28030000 		.4byte	.LLST19
+ 1399 03e1 13       		.uleb128 0x13
+ 1400 03e2 6C656E00 		.ascii	"len\000"
+ 1401 03e6 01       		.byte	0x1
+ 1402 03e7 A7       		.byte	0xa7
+ 1403 03e8 97010000 		.4byte	0x197
+ 1404 03ec 46030000 		.4byte	.LLST20
+ 1405 03f0 0D       		.uleb128 0xd
+ 1406 03f1 80010000 		.4byte	.LASF24
+ 1407 03f5 01       		.byte	0x1
+ 1408 03f6 A8       		.byte	0xa8
+ 1409 03f7 8B010000 		.4byte	0x18b
+ 1410 03fb 64030000 		.4byte	.LLST21
+ 1411 03ff 0E       		.uleb128 0xe
+ 1412 0400 93010000 		.4byte	.LASF25
+ 1413 0404 01       		.byte	0x1
+ 1414 0405 A8       		.byte	0xa8
+ 1415 0406 F7040000 		.4byte	0x4f7
+ 1416 040a 02       		.uleb128 0x2
+ 1417 040b 91       		.byte	0x91
+ 1418 040c 00       		.sleb128 0
+ 1419 040d 0F       		.uleb128 0xf
+ 1420 040e 7200     		.ascii	"r\000"
+ 1421 0410 01       		.byte	0x1
+ 1422 0411 A9       		.byte	0xa9
+ 1423 0412 25000000 		.4byte	0x25
+ 1424 0416 82030000 		.4byte	.LLST22
+ 1425 041a 0F       		.uleb128 0xf
+ 1426 041b 6900     		.ascii	"i\000"
+ 1427 041d 01       		.byte	0x1
+ 1428 041e AA       		.byte	0xaa
+ 1429 041f 25000000 		.4byte	0x25
+ 1430 0423 A0030000 		.4byte	.LLST23
+ 1431 0427 14       		.uleb128 0x14
+ 1432 0428 0E020000 		.4byte	.LASF26
+ 1433 042c 01       		.byte	0x1
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 33
+
+
+ 1434 042d AB       		.byte	0xab
+ 1435 042e 8B010000 		.4byte	0x18b
+ 1436 0432 DF030000 		.4byte	.LLST24
+ 1437 0436 15       		.uleb128 0x15
+ 1438 0437 20000000 		.4byte	.LASF31
+ 1439 043b 01       		.byte	0x1
+ 1440 043c AC       		.byte	0xac
+ 1441 043d 25000000 		.4byte	0x25
+ 1442 0441 01       		.uleb128 0x1
+ 1443 0442 59       		.byte	0x59
+ 1444 0443 1A       		.uleb128 0x1a
+ 1445 0444 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1446 0448 0F       		.uleb128 0xf
+ 1447 0449 6300     		.ascii	"c\000"
+ 1448 044b 01       		.byte	0x1
+ 1449 044c AF       		.byte	0xaf
+ 1450 044d BA020000 		.4byte	0x2ba
+ 1451 0451 3B040000 		.4byte	.LLST25
+ 1452 0455 14       		.uleb128 0x14
+ 1453 0456 E3010000 		.4byte	.LASF15
+ 1454 045a 01       		.byte	0x1
+ 1455 045b B0       		.byte	0xb0
+ 1456 045c 7E000000 		.4byte	0x7e
+ 1457 0460 7A040000 		.4byte	.LLST26
+ 1458 0464 1B       		.uleb128 0x1b
+ 1459 0465 7C000000 		.4byte	.LBB6
+ 1460 0469 0A000000 		.4byte	.LBE6-.LBB6
+ 1461 046d 7F040000 		.4byte	0x47f
+ 1462 0471 0F       		.uleb128 0xf
+ 1463 0472 7400     		.ascii	"t\000"
+ 1464 0474 01       		.byte	0x1
+ 1465 0475 BF       		.byte	0xbf
+ 1466 0476 8B010000 		.4byte	0x18b
+ 1467 047a 98040000 		.4byte	.LLST27
+ 1468 047e 00       		.byte	0
+ 1469 047f 17       		.uleb128 0x17
+ 1470 0480 6C000000 		.4byte	.LVL47
+ 1471 0484 37010000 		.4byte	0x137
+ 1472 0488 9F040000 		.4byte	0x49f
+ 1473 048c 18       		.uleb128 0x18
+ 1474 048d 01       		.uleb128 0x1
+ 1475 048e 50       		.byte	0x50
+ 1476 048f 02       		.uleb128 0x2
+ 1477 0490 76       		.byte	0x76
+ 1478 0491 00       		.sleb128 0
+ 1479 0492 18       		.uleb128 0x18
+ 1480 0493 01       		.uleb128 0x1
+ 1481 0494 51       		.byte	0x51
+ 1482 0495 02       		.uleb128 0x2
+ 1483 0496 75       		.byte	0x75
+ 1484 0497 00       		.sleb128 0
+ 1485 0498 18       		.uleb128 0x18
+ 1486 0499 01       		.uleb128 0x1
+ 1487 049a 52       		.byte	0x52
+ 1488 049b 02       		.uleb128 0x2
+ 1489 049c 7A       		.byte	0x7a
+ 1490 049d 00       		.sleb128 0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 34
+
+
+ 1491 049e 00       		.byte	0
+ 1492 049f 17       		.uleb128 0x17
+ 1493 04a0 1A010000 		.4byte	.LVL61
+ 1494 04a4 C6020000 		.4byte	0x2c6
+ 1495 04a8 CC040000 		.4byte	0x4cc
+ 1496 04ac 18       		.uleb128 0x18
+ 1497 04ad 01       		.uleb128 0x1
+ 1498 04ae 50       		.byte	0x50
+ 1499 04af 02       		.uleb128 0x2
+ 1500 04b0 76       		.byte	0x76
+ 1501 04b1 00       		.sleb128 0
+ 1502 04b2 18       		.uleb128 0x18
+ 1503 04b3 01       		.uleb128 0x1
+ 1504 04b4 51       		.byte	0x51
+ 1505 04b5 02       		.uleb128 0x2
+ 1506 04b6 78       		.byte	0x78
+ 1507 04b7 00       		.sleb128 0
+ 1508 04b8 18       		.uleb128 0x18
+ 1509 04b9 01       		.uleb128 0x1
+ 1510 04ba 52       		.byte	0x52
+ 1511 04bb 02       		.uleb128 0x2
+ 1512 04bc 77       		.byte	0x77
+ 1513 04bd 00       		.sleb128 0
+ 1514 04be 18       		.uleb128 0x18
+ 1515 04bf 01       		.uleb128 0x1
+ 1516 04c0 53       		.byte	0x53
+ 1517 04c1 02       		.uleb128 0x2
+ 1518 04c2 75       		.byte	0x75
+ 1519 04c3 00       		.sleb128 0
+ 1520 04c4 18       		.uleb128 0x18
+ 1521 04c5 02       		.uleb128 0x2
+ 1522 04c6 7D       		.byte	0x7d
+ 1523 04c7 00       		.sleb128 0
+ 1524 04c8 02       		.uleb128 0x2
+ 1525 04c9 7A       		.byte	0x7a
+ 1526 04ca 00       		.sleb128 0
+ 1527 04cb 00       		.byte	0
+ 1528 04cc 19       		.uleb128 0x19
+ 1529 04cd 9A010000 		.4byte	.LVL67
+ 1530 04d1 F2010000 		.4byte	0x1f2
+ 1531 04d5 18       		.uleb128 0x18
+ 1532 04d6 01       		.uleb128 0x1
+ 1533 04d7 50       		.byte	0x50
+ 1534 04d8 02       		.uleb128 0x2
+ 1535 04d9 76       		.byte	0x76
+ 1536 04da 00       		.sleb128 0
+ 1537 04db 18       		.uleb128 0x18
+ 1538 04dc 01       		.uleb128 0x1
+ 1539 04dd 51       		.byte	0x51
+ 1540 04de 02       		.uleb128 0x2
+ 1541 04df 78       		.byte	0x78
+ 1542 04e0 00       		.sleb128 0
+ 1543 04e1 18       		.uleb128 0x18
+ 1544 04e2 01       		.uleb128 0x1
+ 1545 04e3 52       		.byte	0x52
+ 1546 04e4 02       		.uleb128 0x2
+ 1547 04e5 77       		.byte	0x77
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 35
+
+
+ 1548 04e6 00       		.sleb128 0
+ 1549 04e7 18       		.uleb128 0x18
+ 1550 04e8 01       		.uleb128 0x1
+ 1551 04e9 53       		.byte	0x53
+ 1552 04ea 02       		.uleb128 0x2
+ 1553 04eb 75       		.byte	0x75
+ 1554 04ec 00       		.sleb128 0
+ 1555 04ed 18       		.uleb128 0x18
+ 1556 04ee 02       		.uleb128 0x2
+ 1557 04ef 7D       		.byte	0x7d
+ 1558 04f0 00       		.sleb128 0
+ 1559 04f1 02       		.uleb128 0x2
+ 1560 04f2 7A       		.byte	0x7a
+ 1561 04f3 00       		.sleb128 0
+ 1562 04f4 00       		.byte	0
+ 1563 04f5 00       		.byte	0
+ 1564 04f6 00       		.byte	0
+ 1565 04f7 11       		.uleb128 0x11
+ 1566 04f8 37000000 		.4byte	0x37
+ 1567 04fc 1D       		.uleb128 0x1d
+ 1568 04fd 51010000 		.4byte	.LASF39
+ 1569 0501 01       		.byte	0x1
+ 1570 0502 6601     		.2byte	0x166
+ 1571 0504 00000000 		.4byte	.LFB5
+ 1572 0508 0E000000 		.4byte	.LFE5-.LFB5
+ 1573 050c 01       		.uleb128 0x1
+ 1574 050d 9C       		.byte	0x9c
+ 1575 050e 1E       		.uleb128 0x1e
+ 1576 050f 5B010000 		.4byte	.LASF23
+ 1577 0513 01       		.byte	0x1
+ 1578 0514 6601     		.2byte	0x166
+ 1579 0516 91010000 		.4byte	0x191
+ 1580 051a 01       		.uleb128 0x1
+ 1581 051b 50       		.byte	0x50
+ 1582 051c 00       		.byte	0
+ 1583 051d 00       		.byte	0
+ 1584              		.section	.debug_abbrev,"",%progbits
+ 1585              	.Ldebug_abbrev0:
+ 1586 0000 01       		.uleb128 0x1
+ 1587 0001 11       		.uleb128 0x11
+ 1588 0002 01       		.byte	0x1
+ 1589 0003 25       		.uleb128 0x25
+ 1590 0004 0E       		.uleb128 0xe
+ 1591 0005 13       		.uleb128 0x13
+ 1592 0006 0B       		.uleb128 0xb
+ 1593 0007 03       		.uleb128 0x3
+ 1594 0008 0E       		.uleb128 0xe
+ 1595 0009 1B       		.uleb128 0x1b
+ 1596 000a 0E       		.uleb128 0xe
+ 1597 000b 55       		.uleb128 0x55
+ 1598 000c 17       		.uleb128 0x17
+ 1599 000d 11       		.uleb128 0x11
+ 1600 000e 01       		.uleb128 0x1
+ 1601 000f 10       		.uleb128 0x10
+ 1602 0010 17       		.uleb128 0x17
+ 1603 0011 00       		.byte	0
+ 1604 0012 00       		.byte	0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 36
+
+
+ 1605 0013 02       		.uleb128 0x2
+ 1606 0014 24       		.uleb128 0x24
+ 1607 0015 00       		.byte	0
+ 1608 0016 0B       		.uleb128 0xb
+ 1609 0017 0B       		.uleb128 0xb
+ 1610 0018 3E       		.uleb128 0x3e
+ 1611 0019 0B       		.uleb128 0xb
+ 1612 001a 03       		.uleb128 0x3
+ 1613 001b 08       		.uleb128 0x8
+ 1614 001c 00       		.byte	0
+ 1615 001d 00       		.byte	0
+ 1616 001e 03       		.uleb128 0x3
+ 1617 001f 16       		.uleb128 0x16
+ 1618 0020 00       		.byte	0
+ 1619 0021 03       		.uleb128 0x3
+ 1620 0022 0E       		.uleb128 0xe
+ 1621 0023 3A       		.uleb128 0x3a
+ 1622 0024 0B       		.uleb128 0xb
+ 1623 0025 3B       		.uleb128 0x3b
+ 1624 0026 0B       		.uleb128 0xb
+ 1625 0027 49       		.uleb128 0x49
+ 1626 0028 13       		.uleb128 0x13
+ 1627 0029 00       		.byte	0
+ 1628 002a 00       		.byte	0
+ 1629 002b 04       		.uleb128 0x4
+ 1630 002c 24       		.uleb128 0x24
+ 1631 002d 00       		.byte	0
+ 1632 002e 0B       		.uleb128 0xb
+ 1633 002f 0B       		.uleb128 0xb
+ 1634 0030 3E       		.uleb128 0x3e
+ 1635 0031 0B       		.uleb128 0xb
+ 1636 0032 03       		.uleb128 0x3
+ 1637 0033 0E       		.uleb128 0xe
+ 1638 0034 00       		.byte	0
+ 1639 0035 00       		.byte	0
+ 1640 0036 05       		.uleb128 0x5
+ 1641 0037 04       		.uleb128 0x4
+ 1642 0038 01       		.byte	0x1
+ 1643 0039 0B       		.uleb128 0xb
+ 1644 003a 0B       		.uleb128 0xb
+ 1645 003b 49       		.uleb128 0x49
+ 1646 003c 13       		.uleb128 0x13
+ 1647 003d 3A       		.uleb128 0x3a
+ 1648 003e 0B       		.uleb128 0xb
+ 1649 003f 3B       		.uleb128 0x3b
+ 1650 0040 0B       		.uleb128 0xb
+ 1651 0041 01       		.uleb128 0x1
+ 1652 0042 13       		.uleb128 0x13
+ 1653 0043 00       		.byte	0
+ 1654 0044 00       		.byte	0
+ 1655 0045 06       		.uleb128 0x6
+ 1656 0046 28       		.uleb128 0x28
+ 1657 0047 00       		.byte	0
+ 1658 0048 03       		.uleb128 0x3
+ 1659 0049 0E       		.uleb128 0xe
+ 1660 004a 1C       		.uleb128 0x1c
+ 1661 004b 0B       		.uleb128 0xb
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 37
+
+
+ 1662 004c 00       		.byte	0
+ 1663 004d 00       		.byte	0
+ 1664 004e 07       		.uleb128 0x7
+ 1665 004f 04       		.uleb128 0x4
+ 1666 0050 01       		.byte	0x1
+ 1667 0051 03       		.uleb128 0x3
+ 1668 0052 0E       		.uleb128 0xe
+ 1669 0053 0B       		.uleb128 0xb
+ 1670 0054 0B       		.uleb128 0xb
+ 1671 0055 49       		.uleb128 0x49
+ 1672 0056 13       		.uleb128 0x13
+ 1673 0057 3A       		.uleb128 0x3a
+ 1674 0058 0B       		.uleb128 0xb
+ 1675 0059 3B       		.uleb128 0x3b
+ 1676 005a 0B       		.uleb128 0xb
+ 1677 005b 01       		.uleb128 0x1
+ 1678 005c 13       		.uleb128 0x13
+ 1679 005d 00       		.byte	0
+ 1680 005e 00       		.byte	0
+ 1681 005f 08       		.uleb128 0x8
+ 1682 0060 28       		.uleb128 0x28
+ 1683 0061 00       		.byte	0
+ 1684 0062 03       		.uleb128 0x3
+ 1685 0063 0E       		.uleb128 0xe
+ 1686 0064 1C       		.uleb128 0x1c
+ 1687 0065 0D       		.uleb128 0xd
+ 1688 0066 00       		.byte	0
+ 1689 0067 00       		.byte	0
+ 1690 0068 09       		.uleb128 0x9
+ 1691 0069 13       		.uleb128 0x13
+ 1692 006a 01       		.byte	0x1
+ 1693 006b 03       		.uleb128 0x3
+ 1694 006c 0E       		.uleb128 0xe
+ 1695 006d 0B       		.uleb128 0xb
+ 1696 006e 0B       		.uleb128 0xb
+ 1697 006f 3A       		.uleb128 0x3a
+ 1698 0070 0B       		.uleb128 0xb
+ 1699 0071 3B       		.uleb128 0x3b
+ 1700 0072 0B       		.uleb128 0xb
+ 1701 0073 01       		.uleb128 0x1
+ 1702 0074 13       		.uleb128 0x13
+ 1703 0075 00       		.byte	0
+ 1704 0076 00       		.byte	0
+ 1705 0077 0A       		.uleb128 0xa
+ 1706 0078 0D       		.uleb128 0xd
+ 1707 0079 00       		.byte	0
+ 1708 007a 03       		.uleb128 0x3
+ 1709 007b 0E       		.uleb128 0xe
+ 1710 007c 3A       		.uleb128 0x3a
+ 1711 007d 0B       		.uleb128 0xb
+ 1712 007e 3B       		.uleb128 0x3b
+ 1713 007f 0B       		.uleb128 0xb
+ 1714 0080 49       		.uleb128 0x49
+ 1715 0081 13       		.uleb128 0x13
+ 1716 0082 38       		.uleb128 0x38
+ 1717 0083 0B       		.uleb128 0xb
+ 1718 0084 00       		.byte	0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 38
+
+
+ 1719 0085 00       		.byte	0
+ 1720 0086 0B       		.uleb128 0xb
+ 1721 0087 0D       		.uleb128 0xd
+ 1722 0088 00       		.byte	0
+ 1723 0089 03       		.uleb128 0x3
+ 1724 008a 08       		.uleb128 0x8
+ 1725 008b 3A       		.uleb128 0x3a
+ 1726 008c 0B       		.uleb128 0xb
+ 1727 008d 3B       		.uleb128 0x3b
+ 1728 008e 0B       		.uleb128 0xb
+ 1729 008f 49       		.uleb128 0x49
+ 1730 0090 13       		.uleb128 0x13
+ 1731 0091 38       		.uleb128 0x38
+ 1732 0092 0B       		.uleb128 0xb
+ 1733 0093 00       		.byte	0
+ 1734 0094 00       		.byte	0
+ 1735 0095 0C       		.uleb128 0xc
+ 1736 0096 2E       		.uleb128 0x2e
+ 1737 0097 01       		.byte	0x1
+ 1738 0098 03       		.uleb128 0x3
+ 1739 0099 0E       		.uleb128 0xe
+ 1740 009a 3A       		.uleb128 0x3a
+ 1741 009b 0B       		.uleb128 0xb
+ 1742 009c 3B       		.uleb128 0x3b
+ 1743 009d 0B       		.uleb128 0xb
+ 1744 009e 27       		.uleb128 0x27
+ 1745 009f 19       		.uleb128 0x19
+ 1746 00a0 49       		.uleb128 0x49
+ 1747 00a1 13       		.uleb128 0x13
+ 1748 00a2 11       		.uleb128 0x11
+ 1749 00a3 01       		.uleb128 0x1
+ 1750 00a4 12       		.uleb128 0x12
+ 1751 00a5 06       		.uleb128 0x6
+ 1752 00a6 40       		.uleb128 0x40
+ 1753 00a7 18       		.uleb128 0x18
+ 1754 00a8 9742     		.uleb128 0x2117
+ 1755 00aa 19       		.uleb128 0x19
+ 1756 00ab 01       		.uleb128 0x1
+ 1757 00ac 13       		.uleb128 0x13
+ 1758 00ad 00       		.byte	0
+ 1759 00ae 00       		.byte	0
+ 1760 00af 0D       		.uleb128 0xd
+ 1761 00b0 05       		.uleb128 0x5
+ 1762 00b1 00       		.byte	0
+ 1763 00b2 03       		.uleb128 0x3
+ 1764 00b3 0E       		.uleb128 0xe
+ 1765 00b4 3A       		.uleb128 0x3a
+ 1766 00b5 0B       		.uleb128 0xb
+ 1767 00b6 3B       		.uleb128 0x3b
+ 1768 00b7 0B       		.uleb128 0xb
+ 1769 00b8 49       		.uleb128 0x49
+ 1770 00b9 13       		.uleb128 0x13
+ 1771 00ba 02       		.uleb128 0x2
+ 1772 00bb 17       		.uleb128 0x17
+ 1773 00bc 00       		.byte	0
+ 1774 00bd 00       		.byte	0
+ 1775 00be 0E       		.uleb128 0xe
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 39
+
+
+ 1776 00bf 05       		.uleb128 0x5
+ 1777 00c0 00       		.byte	0
+ 1778 00c1 03       		.uleb128 0x3
+ 1779 00c2 0E       		.uleb128 0xe
+ 1780 00c3 3A       		.uleb128 0x3a
+ 1781 00c4 0B       		.uleb128 0xb
+ 1782 00c5 3B       		.uleb128 0x3b
+ 1783 00c6 0B       		.uleb128 0xb
+ 1784 00c7 49       		.uleb128 0x49
+ 1785 00c8 13       		.uleb128 0x13
+ 1786 00c9 02       		.uleb128 0x2
+ 1787 00ca 18       		.uleb128 0x18
+ 1788 00cb 00       		.byte	0
+ 1789 00cc 00       		.byte	0
+ 1790 00cd 0F       		.uleb128 0xf
+ 1791 00ce 34       		.uleb128 0x34
+ 1792 00cf 00       		.byte	0
+ 1793 00d0 03       		.uleb128 0x3
+ 1794 00d1 08       		.uleb128 0x8
+ 1795 00d2 3A       		.uleb128 0x3a
+ 1796 00d3 0B       		.uleb128 0xb
+ 1797 00d4 3B       		.uleb128 0x3b
+ 1798 00d5 0B       		.uleb128 0xb
+ 1799 00d6 49       		.uleb128 0x49
+ 1800 00d7 13       		.uleb128 0x13
+ 1801 00d8 02       		.uleb128 0x2
+ 1802 00d9 17       		.uleb128 0x17
+ 1803 00da 00       		.byte	0
+ 1804 00db 00       		.byte	0
+ 1805 00dc 10       		.uleb128 0x10
+ 1806 00dd 0F       		.uleb128 0xf
+ 1807 00de 00       		.byte	0
+ 1808 00df 0B       		.uleb128 0xb
+ 1809 00e0 0B       		.uleb128 0xb
+ 1810 00e1 49       		.uleb128 0x49
+ 1811 00e2 13       		.uleb128 0x13
+ 1812 00e3 00       		.byte	0
+ 1813 00e4 00       		.byte	0
+ 1814 00e5 11       		.uleb128 0x11
+ 1815 00e6 26       		.uleb128 0x26
+ 1816 00e7 00       		.byte	0
+ 1817 00e8 49       		.uleb128 0x49
+ 1818 00e9 13       		.uleb128 0x13
+ 1819 00ea 00       		.byte	0
+ 1820 00eb 00       		.byte	0
+ 1821 00ec 12       		.uleb128 0x12
+ 1822 00ed 2E       		.uleb128 0x2e
+ 1823 00ee 01       		.byte	0x1
+ 1824 00ef 03       		.uleb128 0x3
+ 1825 00f0 0E       		.uleb128 0xe
+ 1826 00f1 3A       		.uleb128 0x3a
+ 1827 00f2 0B       		.uleb128 0xb
+ 1828 00f3 3B       		.uleb128 0x3b
+ 1829 00f4 0B       		.uleb128 0xb
+ 1830 00f5 27       		.uleb128 0x27
+ 1831 00f6 19       		.uleb128 0x19
+ 1832 00f7 11       		.uleb128 0x11
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 40
+
+
+ 1833 00f8 01       		.uleb128 0x1
+ 1834 00f9 12       		.uleb128 0x12
+ 1835 00fa 06       		.uleb128 0x6
+ 1836 00fb 40       		.uleb128 0x40
+ 1837 00fc 18       		.uleb128 0x18
+ 1838 00fd 9742     		.uleb128 0x2117
+ 1839 00ff 19       		.uleb128 0x19
+ 1840 0100 01       		.uleb128 0x1
+ 1841 0101 13       		.uleb128 0x13
+ 1842 0102 00       		.byte	0
+ 1843 0103 00       		.byte	0
+ 1844 0104 13       		.uleb128 0x13
+ 1845 0105 05       		.uleb128 0x5
+ 1846 0106 00       		.byte	0
+ 1847 0107 03       		.uleb128 0x3
+ 1848 0108 08       		.uleb128 0x8
+ 1849 0109 3A       		.uleb128 0x3a
+ 1850 010a 0B       		.uleb128 0xb
+ 1851 010b 3B       		.uleb128 0x3b
+ 1852 010c 0B       		.uleb128 0xb
+ 1853 010d 49       		.uleb128 0x49
+ 1854 010e 13       		.uleb128 0x13
+ 1855 010f 02       		.uleb128 0x2
+ 1856 0110 17       		.uleb128 0x17
+ 1857 0111 00       		.byte	0
+ 1858 0112 00       		.byte	0
+ 1859 0113 14       		.uleb128 0x14
+ 1860 0114 34       		.uleb128 0x34
+ 1861 0115 00       		.byte	0
+ 1862 0116 03       		.uleb128 0x3
+ 1863 0117 0E       		.uleb128 0xe
+ 1864 0118 3A       		.uleb128 0x3a
+ 1865 0119 0B       		.uleb128 0xb
+ 1866 011a 3B       		.uleb128 0x3b
+ 1867 011b 0B       		.uleb128 0xb
+ 1868 011c 49       		.uleb128 0x49
+ 1869 011d 13       		.uleb128 0x13
+ 1870 011e 02       		.uleb128 0x2
+ 1871 011f 17       		.uleb128 0x17
+ 1872 0120 00       		.byte	0
+ 1873 0121 00       		.byte	0
+ 1874 0122 15       		.uleb128 0x15
+ 1875 0123 34       		.uleb128 0x34
+ 1876 0124 00       		.byte	0
+ 1877 0125 03       		.uleb128 0x3
+ 1878 0126 0E       		.uleb128 0xe
+ 1879 0127 3A       		.uleb128 0x3a
+ 1880 0128 0B       		.uleb128 0xb
+ 1881 0129 3B       		.uleb128 0x3b
+ 1882 012a 0B       		.uleb128 0xb
+ 1883 012b 49       		.uleb128 0x49
+ 1884 012c 13       		.uleb128 0x13
+ 1885 012d 02       		.uleb128 0x2
+ 1886 012e 18       		.uleb128 0x18
+ 1887 012f 00       		.byte	0
+ 1888 0130 00       		.byte	0
+ 1889 0131 16       		.uleb128 0x16
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 41
+
+
+ 1890 0132 0A       		.uleb128 0xa
+ 1891 0133 00       		.byte	0
+ 1892 0134 03       		.uleb128 0x3
+ 1893 0135 0E       		.uleb128 0xe
+ 1894 0136 3A       		.uleb128 0x3a
+ 1895 0137 0B       		.uleb128 0xb
+ 1896 0138 3B       		.uleb128 0x3b
+ 1897 0139 0B       		.uleb128 0xb
+ 1898 013a 11       		.uleb128 0x11
+ 1899 013b 01       		.uleb128 0x1
+ 1900 013c 00       		.byte	0
+ 1901 013d 00       		.byte	0
+ 1902 013e 17       		.uleb128 0x17
+ 1903 013f 898201   		.uleb128 0x4109
+ 1904 0142 01       		.byte	0x1
+ 1905 0143 11       		.uleb128 0x11
+ 1906 0144 01       		.uleb128 0x1
+ 1907 0145 31       		.uleb128 0x31
+ 1908 0146 13       		.uleb128 0x13
+ 1909 0147 01       		.uleb128 0x1
+ 1910 0148 13       		.uleb128 0x13
+ 1911 0149 00       		.byte	0
+ 1912 014a 00       		.byte	0
+ 1913 014b 18       		.uleb128 0x18
+ 1914 014c 8A8201   		.uleb128 0x410a
+ 1915 014f 00       		.byte	0
+ 1916 0150 02       		.uleb128 0x2
+ 1917 0151 18       		.uleb128 0x18
+ 1918 0152 9142     		.uleb128 0x2111
+ 1919 0154 18       		.uleb128 0x18
+ 1920 0155 00       		.byte	0
+ 1921 0156 00       		.byte	0
+ 1922 0157 19       		.uleb128 0x19
+ 1923 0158 898201   		.uleb128 0x4109
+ 1924 015b 01       		.byte	0x1
+ 1925 015c 11       		.uleb128 0x11
+ 1926 015d 01       		.uleb128 0x1
+ 1927 015e 31       		.uleb128 0x31
+ 1928 015f 13       		.uleb128 0x13
+ 1929 0160 00       		.byte	0
+ 1930 0161 00       		.byte	0
+ 1931 0162 1A       		.uleb128 0x1a
+ 1932 0163 0B       		.uleb128 0xb
+ 1933 0164 01       		.byte	0x1
+ 1934 0165 55       		.uleb128 0x55
+ 1935 0166 17       		.uleb128 0x17
+ 1936 0167 00       		.byte	0
+ 1937 0168 00       		.byte	0
+ 1938 0169 1B       		.uleb128 0x1b
+ 1939 016a 0B       		.uleb128 0xb
+ 1940 016b 01       		.byte	0x1
+ 1941 016c 11       		.uleb128 0x11
+ 1942 016d 01       		.uleb128 0x1
+ 1943 016e 12       		.uleb128 0x12
+ 1944 016f 06       		.uleb128 0x6
+ 1945 0170 01       		.uleb128 0x1
+ 1946 0171 13       		.uleb128 0x13
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 42
+
+
+ 1947 0172 00       		.byte	0
+ 1948 0173 00       		.byte	0
+ 1949 0174 1C       		.uleb128 0x1c
+ 1950 0175 2E       		.uleb128 0x2e
+ 1951 0176 01       		.byte	0x1
+ 1952 0177 3F       		.uleb128 0x3f
+ 1953 0178 19       		.uleb128 0x19
+ 1954 0179 03       		.uleb128 0x3
+ 1955 017a 0E       		.uleb128 0xe
+ 1956 017b 3A       		.uleb128 0x3a
+ 1957 017c 0B       		.uleb128 0xb
+ 1958 017d 3B       		.uleb128 0x3b
+ 1959 017e 0B       		.uleb128 0xb
+ 1960 017f 27       		.uleb128 0x27
+ 1961 0180 19       		.uleb128 0x19
+ 1962 0181 49       		.uleb128 0x49
+ 1963 0182 13       		.uleb128 0x13
+ 1964 0183 11       		.uleb128 0x11
+ 1965 0184 01       		.uleb128 0x1
+ 1966 0185 12       		.uleb128 0x12
+ 1967 0186 06       		.uleb128 0x6
+ 1968 0187 40       		.uleb128 0x40
+ 1969 0188 18       		.uleb128 0x18
+ 1970 0189 9742     		.uleb128 0x2117
+ 1971 018b 19       		.uleb128 0x19
+ 1972 018c 01       		.uleb128 0x1
+ 1973 018d 13       		.uleb128 0x13
+ 1974 018e 00       		.byte	0
+ 1975 018f 00       		.byte	0
+ 1976 0190 1D       		.uleb128 0x1d
+ 1977 0191 2E       		.uleb128 0x2e
+ 1978 0192 01       		.byte	0x1
+ 1979 0193 3F       		.uleb128 0x3f
+ 1980 0194 19       		.uleb128 0x19
+ 1981 0195 03       		.uleb128 0x3
+ 1982 0196 0E       		.uleb128 0xe
+ 1983 0197 3A       		.uleb128 0x3a
+ 1984 0198 0B       		.uleb128 0xb
+ 1985 0199 3B       		.uleb128 0x3b
+ 1986 019a 05       		.uleb128 0x5
+ 1987 019b 27       		.uleb128 0x27
+ 1988 019c 19       		.uleb128 0x19
+ 1989 019d 11       		.uleb128 0x11
+ 1990 019e 01       		.uleb128 0x1
+ 1991 019f 12       		.uleb128 0x12
+ 1992 01a0 06       		.uleb128 0x6
+ 1993 01a1 40       		.uleb128 0x40
+ 1994 01a2 18       		.uleb128 0x18
+ 1995 01a3 9742     		.uleb128 0x2117
+ 1996 01a5 19       		.uleb128 0x19
+ 1997 01a6 00       		.byte	0
+ 1998 01a7 00       		.byte	0
+ 1999 01a8 1E       		.uleb128 0x1e
+ 2000 01a9 05       		.uleb128 0x5
+ 2001 01aa 00       		.byte	0
+ 2002 01ab 03       		.uleb128 0x3
+ 2003 01ac 0E       		.uleb128 0xe
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 43
+
+
+ 2004 01ad 3A       		.uleb128 0x3a
+ 2005 01ae 0B       		.uleb128 0xb
+ 2006 01af 3B       		.uleb128 0x3b
+ 2007 01b0 05       		.uleb128 0x5
+ 2008 01b1 49       		.uleb128 0x49
+ 2009 01b2 13       		.uleb128 0x13
+ 2010 01b3 02       		.uleb128 0x2
+ 2011 01b4 18       		.uleb128 0x18
+ 2012 01b5 00       		.byte	0
+ 2013 01b6 00       		.byte	0
+ 2014 01b7 00       		.byte	0
+ 2015              		.section	.debug_loc,"",%progbits
+ 2016              	.Ldebug_loc0:
+ 2017              	.LLST0:
+ 2018 0000 00000000 		.4byte	.LVL0
+ 2019 0004 0E000000 		.4byte	.LVL2
+ 2020 0008 0100     		.2byte	0x1
+ 2021 000a 50       		.byte	0x50
+ 2022 000b 0E000000 		.4byte	.LVL2
+ 2023 000f 1C000000 		.4byte	.LVL3
+ 2024 0013 0400     		.2byte	0x4
+ 2025 0015 F3       		.byte	0xf3
+ 2026 0016 01       		.uleb128 0x1
+ 2027 0017 50       		.byte	0x50
+ 2028 0018 9F       		.byte	0x9f
+ 2029 0019 1C000000 		.4byte	.LVL3
+ 2030 001d 1E000000 		.4byte	.LVL4
+ 2031 0021 0100     		.2byte	0x1
+ 2032 0023 50       		.byte	0x50
+ 2033 0024 1E000000 		.4byte	.LVL4
+ 2034 0028 20000000 		.4byte	.LFE0
+ 2035 002c 0400     		.2byte	0x4
+ 2036 002e F3       		.byte	0xf3
+ 2037 002f 01       		.uleb128 0x1
+ 2038 0030 50       		.byte	0x50
+ 2039 0031 9F       		.byte	0x9f
+ 2040 0032 00000000 		.4byte	0
+ 2041 0036 00000000 		.4byte	0
+ 2042              	.LLST1:
+ 2043 003a 00000000 		.4byte	.LVL0
+ 2044 003e 08000000 		.4byte	.LVL1
+ 2045 0042 0100     		.2byte	0x1
+ 2046 0044 52       		.byte	0x52
+ 2047 0045 08000000 		.4byte	.LVL1
+ 2048 0049 1C000000 		.4byte	.LVL3
+ 2049 004d 0400     		.2byte	0x4
+ 2050 004f F3       		.byte	0xf3
+ 2051 0050 01       		.uleb128 0x1
+ 2052 0051 52       		.byte	0x52
+ 2053 0052 9F       		.byte	0x9f
+ 2054 0053 1C000000 		.4byte	.LVL3
+ 2055 0057 20000000 		.4byte	.LFE0
+ 2056 005b 0100     		.2byte	0x1
+ 2057 005d 52       		.byte	0x52
+ 2058 005e 00000000 		.4byte	0
+ 2059 0062 00000000 		.4byte	0
+ 2060              	.LLST2:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 44
+
+
+ 2061 0066 0E000000 		.4byte	.LVL2
+ 2062 006a 1C000000 		.4byte	.LVL3
+ 2063 006e 0100     		.2byte	0x1
+ 2064 0070 50       		.byte	0x50
+ 2065 0071 00000000 		.4byte	0
+ 2066 0075 00000000 		.4byte	0
+ 2067              	.LLST3:
+ 2068 0079 00000000 		.4byte	.LVL5
+ 2069 007d 08000000 		.4byte	.LVL6
+ 2070 0081 0100     		.2byte	0x1
+ 2071 0083 53       		.byte	0x53
+ 2072 0084 08000000 		.4byte	.LVL6
+ 2073 0088 0C000000 		.4byte	.LFE1
+ 2074 008c 0200     		.2byte	0x2
+ 2075 008e 70       		.byte	0x70
+ 2076 008f 08       		.sleb128 8
+ 2077 0090 00000000 		.4byte	0
+ 2078 0094 00000000 		.4byte	0
+ 2079              	.LLST4:
+ 2080 0098 00000000 		.4byte	.LVL7
+ 2081 009c 3C000000 		.4byte	.LVL9
+ 2082 00a0 0100     		.2byte	0x1
+ 2083 00a2 50       		.byte	0x50
+ 2084 00a3 3C000000 		.4byte	.LVL9
+ 2085 00a7 3E000000 		.4byte	.LVL10
+ 2086 00ab 0400     		.2byte	0x4
+ 2087 00ad F3       		.byte	0xf3
+ 2088 00ae 01       		.uleb128 0x1
+ 2089 00af 50       		.byte	0x50
+ 2090 00b0 9F       		.byte	0x9f
+ 2091 00b1 3E000000 		.4byte	.LVL10
+ 2092 00b5 56000000 		.4byte	.LVL11
+ 2093 00b9 0100     		.2byte	0x1
+ 2094 00bb 50       		.byte	0x50
+ 2095 00bc 56000000 		.4byte	.LVL11
+ 2096 00c0 58000000 		.4byte	.LVL12
+ 2097 00c4 0400     		.2byte	0x4
+ 2098 00c6 F3       		.byte	0xf3
+ 2099 00c7 01       		.uleb128 0x1
+ 2100 00c8 50       		.byte	0x50
+ 2101 00c9 9F       		.byte	0x9f
+ 2102 00ca 58000000 		.4byte	.LVL12
+ 2103 00ce 61000000 		.4byte	.LVL15-1
+ 2104 00d2 0100     		.2byte	0x1
+ 2105 00d4 50       		.byte	0x50
+ 2106 00d5 61000000 		.4byte	.LVL15-1
+ 2107 00d9 80000000 		.4byte	.LFE2
+ 2108 00dd 0100     		.2byte	0x1
+ 2109 00df 54       		.byte	0x54
+ 2110 00e0 00000000 		.4byte	0
+ 2111 00e4 00000000 		.4byte	0
+ 2112              	.LLST5:
+ 2113 00e8 00000000 		.4byte	.LVL7
+ 2114 00ec 5A000000 		.4byte	.LVL13
+ 2115 00f0 0100     		.2byte	0x1
+ 2116 00f2 51       		.byte	0x51
+ 2117 00f3 5A000000 		.4byte	.LVL13
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 45
+
+
+ 2118 00f7 80000000 		.4byte	.LFE2
+ 2119 00fb 0400     		.2byte	0x4
+ 2120 00fd F3       		.byte	0xf3
+ 2121 00fe 01       		.uleb128 0x1
+ 2122 00ff 51       		.byte	0x51
+ 2123 0100 9F       		.byte	0x9f
+ 2124 0101 00000000 		.4byte	0
+ 2125 0105 00000000 		.4byte	0
+ 2126              	.LLST6:
+ 2127 0109 00000000 		.4byte	.LVL7
+ 2128 010d 5E000000 		.4byte	.LVL14
+ 2129 0111 0100     		.2byte	0x1
+ 2130 0113 52       		.byte	0x52
+ 2131 0114 5E000000 		.4byte	.LVL14
+ 2132 0118 80000000 		.4byte	.LFE2
+ 2133 011c 0400     		.2byte	0x4
+ 2134 011e F3       		.byte	0xf3
+ 2135 011f 01       		.uleb128 0x1
+ 2136 0120 52       		.byte	0x52
+ 2137 0121 9F       		.byte	0x9f
+ 2138 0122 00000000 		.4byte	0
+ 2139 0126 00000000 		.4byte	0
+ 2140              	.LLST7:
+ 2141 012a 00000000 		.4byte	.LVL7
+ 2142 012e 61000000 		.4byte	.LVL15-1
+ 2143 0132 0100     		.2byte	0x1
+ 2144 0134 53       		.byte	0x53
+ 2145 0135 61000000 		.4byte	.LVL15-1
+ 2146 0139 80000000 		.4byte	.LFE2
+ 2147 013d 0400     		.2byte	0x4
+ 2148 013f F3       		.byte	0xf3
+ 2149 0140 01       		.uleb128 0x1
+ 2150 0141 53       		.byte	0x53
+ 2151 0142 9F       		.byte	0x9f
+ 2152 0143 00000000 		.4byte	0
+ 2153 0147 00000000 		.4byte	0
+ 2154              	.LLST8:
+ 2155 014b 00000000 		.4byte	.LVL7
+ 2156 014f 3E000000 		.4byte	.LVL10
+ 2157 0153 0200     		.2byte	0x2
+ 2158 0155 91       		.byte	0x91
+ 2159 0156 00       		.sleb128 0
+ 2160 0157 3E000000 		.4byte	.LVL10
+ 2161 015b 80000000 		.4byte	.LFE2
+ 2162 015f 0200     		.2byte	0x2
+ 2163 0161 91       		.byte	0x91
+ 2164 0162 00       		.sleb128 0
+ 2165 0163 00000000 		.4byte	0
+ 2166 0167 00000000 		.4byte	0
+ 2167              	.LLST9:
+ 2168 016b 62000000 		.4byte	.LVL15
+ 2169 016f 6A000000 		.4byte	.LVL16
+ 2170 0173 0100     		.2byte	0x1
+ 2171 0175 50       		.byte	0x50
+ 2172 0176 6C000000 		.4byte	.LVL17
+ 2173 017a 75000000 		.4byte	.LVL18-1
+ 2174 017e 0100     		.2byte	0x1
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 46
+
+
+ 2175 0180 50       		.byte	0x50
+ 2176 0181 00000000 		.4byte	0
+ 2177 0185 00000000 		.4byte	0
+ 2178              	.LLST10:
+ 2179 0189 00000000 		.4byte	.LVL19
+ 2180 018d 1D000000 		.4byte	.LVL24-1
+ 2181 0191 0100     		.2byte	0x1
+ 2182 0193 50       		.byte	0x50
+ 2183 0194 1D000000 		.4byte	.LVL24-1
+ 2184 0198 36000000 		.4byte	.LVL28
+ 2185 019c 0100     		.2byte	0x1
+ 2186 019e 54       		.byte	0x54
+ 2187 019f 36000000 		.4byte	.LVL28
+ 2188 01a3 CE000000 		.4byte	.LVL32
+ 2189 01a7 0100     		.2byte	0x1
+ 2190 01a9 50       		.byte	0x50
+ 2191 01aa CE000000 		.4byte	.LVL32
+ 2192 01ae D0000000 		.4byte	.LVL33
+ 2193 01b2 0400     		.2byte	0x4
+ 2194 01b4 F3       		.byte	0xf3
+ 2195 01b5 01       		.uleb128 0x1
+ 2196 01b6 50       		.byte	0x50
+ 2197 01b7 9F       		.byte	0x9f
+ 2198 01b8 D0000000 		.4byte	.LVL33
+ 2199 01bc F8000000 		.4byte	.LVL36
+ 2200 01c0 0100     		.2byte	0x1
+ 2201 01c2 50       		.byte	0x50
+ 2202 01c3 F8000000 		.4byte	.LVL36
+ 2203 01c7 FA000000 		.4byte	.LVL37
+ 2204 01cb 0400     		.2byte	0x4
+ 2205 01cd F3       		.byte	0xf3
+ 2206 01ce 01       		.uleb128 0x1
+ 2207 01cf 50       		.byte	0x50
+ 2208 01d0 9F       		.byte	0x9f
+ 2209 01d1 FA000000 		.4byte	.LVL37
+ 2210 01d5 14010000 		.4byte	.LVL38
+ 2211 01d9 0100     		.2byte	0x1
+ 2212 01db 50       		.byte	0x50
+ 2213 01dc 14010000 		.4byte	.LVL38
+ 2214 01e0 16010000 		.4byte	.LVL39
+ 2215 01e4 0400     		.2byte	0x4
+ 2216 01e6 F3       		.byte	0xf3
+ 2217 01e7 01       		.uleb128 0x1
+ 2218 01e8 50       		.byte	0x50
+ 2219 01e9 9F       		.byte	0x9f
+ 2220 01ea 16010000 		.4byte	.LVL39
+ 2221 01ee 18010000 		.4byte	.LVL40
+ 2222 01f2 0100     		.2byte	0x1
+ 2223 01f4 50       		.byte	0x50
+ 2224 01f5 18010000 		.4byte	.LVL40
+ 2225 01f9 1A010000 		.4byte	.LFE3
+ 2226 01fd 0400     		.2byte	0x4
+ 2227 01ff F3       		.byte	0xf3
+ 2228 0200 01       		.uleb128 0x1
+ 2229 0201 50       		.byte	0x50
+ 2230 0202 9F       		.byte	0x9f
+ 2231 0203 00000000 		.4byte	0
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 47
+
+
+ 2232 0207 00000000 		.4byte	0
+ 2233              	.LLST11:
+ 2234 020b 00000000 		.4byte	.LVL19
+ 2235 020f 16000000 		.4byte	.LVL22
+ 2236 0213 0100     		.2byte	0x1
+ 2237 0215 51       		.byte	0x51
+ 2238 0216 16000000 		.4byte	.LVL22
+ 2239 021a 36000000 		.4byte	.LVL28
+ 2240 021e 0400     		.2byte	0x4
+ 2241 0220 F3       		.byte	0xf3
+ 2242 0221 01       		.uleb128 0x1
+ 2243 0222 51       		.byte	0x51
+ 2244 0223 9F       		.byte	0x9f
+ 2245 0224 36000000 		.4byte	.LVL28
+ 2246 0228 1A010000 		.4byte	.LFE3
+ 2247 022c 0100     		.2byte	0x1
+ 2248 022e 51       		.byte	0x51
+ 2249 022f 00000000 		.4byte	0
+ 2250 0233 00000000 		.4byte	0
+ 2251              	.LLST12:
+ 2252 0237 00000000 		.4byte	.LVL19
+ 2253 023b 1A000000 		.4byte	.LVL23
+ 2254 023f 0100     		.2byte	0x1
+ 2255 0241 52       		.byte	0x52
+ 2256 0242 1A000000 		.4byte	.LVL23
+ 2257 0246 36000000 		.4byte	.LVL28
+ 2258 024a 0400     		.2byte	0x4
+ 2259 024c F3       		.byte	0xf3
+ 2260 024d 01       		.uleb128 0x1
+ 2261 024e 52       		.byte	0x52
+ 2262 024f 9F       		.byte	0x9f
+ 2263 0250 36000000 		.4byte	.LVL28
+ 2264 0254 1A010000 		.4byte	.LFE3
+ 2265 0258 0100     		.2byte	0x1
+ 2266 025a 52       		.byte	0x52
+ 2267 025b 00000000 		.4byte	0
+ 2268 025f 00000000 		.4byte	0
+ 2269              	.LLST13:
+ 2270 0263 00000000 		.4byte	.LVL19
+ 2271 0267 1D000000 		.4byte	.LVL24-1
+ 2272 026b 0100     		.2byte	0x1
+ 2273 026d 53       		.byte	0x53
+ 2274 026e 1D000000 		.4byte	.LVL24-1
+ 2275 0272 36000000 		.4byte	.LVL28
+ 2276 0276 0400     		.2byte	0x4
+ 2277 0278 F3       		.byte	0xf3
+ 2278 0279 01       		.uleb128 0x1
+ 2279 027a 53       		.byte	0x53
+ 2280 027b 9F       		.byte	0x9f
+ 2281 027c 36000000 		.4byte	.LVL28
+ 2282 0280 1A010000 		.4byte	.LFE3
+ 2283 0284 0100     		.2byte	0x1
+ 2284 0286 53       		.byte	0x53
+ 2285 0287 00000000 		.4byte	0
+ 2286 028b 00000000 		.4byte	0
+ 2287              	.LLST14:
+ 2288 028f 00000000 		.4byte	.LVL19
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 48
+
+
+ 2289 0293 28000000 		.4byte	.LVL26
+ 2290 0297 0200     		.2byte	0x2
+ 2291 0299 91       		.byte	0x91
+ 2292 029a 00       		.sleb128 0
+ 2293 029b 28000000 		.4byte	.LVL26
+ 2294 029f 1A010000 		.4byte	.LFE3
+ 2295 02a3 0200     		.2byte	0x2
+ 2296 02a5 91       		.byte	0x91
+ 2297 02a6 00       		.sleb128 0
+ 2298 02a7 00000000 		.4byte	0
+ 2299 02ab 00000000 		.4byte	0
+ 2300              	.LLST15:
+ 2301 02af 1E000000 		.4byte	.LVL24
+ 2302 02b3 26000000 		.4byte	.LVL25
+ 2303 02b7 0100     		.2byte	0x1
+ 2304 02b9 50       		.byte	0x50
+ 2305 02ba 28000000 		.4byte	.LVL26
+ 2306 02be 31000000 		.4byte	.LVL27-1
+ 2307 02c2 0100     		.2byte	0x1
+ 2308 02c4 50       		.byte	0x50
+ 2309 02c5 00000000 		.4byte	0
+ 2310 02c9 00000000 		.4byte	0
+ 2311              	.LLST16:
+ 2312 02cd 0A000000 		.4byte	.LVL21
+ 2313 02d1 44000000 		.4byte	.LVL29
+ 2314 02d5 0100     		.2byte	0x1
+ 2315 02d7 55       		.byte	0x55
+ 2316 02d8 16010000 		.4byte	.LVL39
+ 2317 02dc 1A010000 		.4byte	.LFE3
+ 2318 02e0 0100     		.2byte	0x1
+ 2319 02e2 55       		.byte	0x55
+ 2320 02e3 00000000 		.4byte	0
+ 2321 02e7 00000000 		.4byte	0
+ 2322              	.LLST17:
+ 2323 02eb A6000000 		.4byte	.LVL30
+ 2324 02ef AC000000 		.4byte	.LVL31
+ 2325 02f3 0200     		.2byte	0x2
+ 2326 02f5 30       		.byte	0x30
+ 2327 02f6 9F       		.byte	0x9f
+ 2328 02f7 AC000000 		.4byte	.LVL31
+ 2329 02fb F2000000 		.4byte	.LVL35
+ 2330 02ff 0100     		.2byte	0x1
+ 2331 0301 5E       		.byte	0x5e
+ 2332 0302 00000000 		.4byte	0
+ 2333 0306 00000000 		.4byte	0
+ 2334              	.LLST18:
+ 2335 030a 00000000 		.4byte	.LVL41
+ 2336 030e 18000000 		.4byte	.LVL43
+ 2337 0312 0100     		.2byte	0x1
+ 2338 0314 50       		.byte	0x50
+ 2339 0315 18000000 		.4byte	.LVL43
+ 2340 0319 12020000 		.4byte	.LFE4
+ 2341 031d 0100     		.2byte	0x1
+ 2342 031f 56       		.byte	0x56
+ 2343 0320 00000000 		.4byte	0
+ 2344 0324 00000000 		.4byte	0
+ 2345              	.LLST19:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 49
+
+
+ 2346 0328 00000000 		.4byte	.LVL41
+ 2347 032c 18000000 		.4byte	.LVL43
+ 2348 0330 0100     		.2byte	0x1
+ 2349 0332 51       		.byte	0x51
+ 2350 0333 18000000 		.4byte	.LVL43
+ 2351 0337 12020000 		.4byte	.LFE4
+ 2352 033b 0100     		.2byte	0x1
+ 2353 033d 58       		.byte	0x58
+ 2354 033e 00000000 		.4byte	0
+ 2355 0342 00000000 		.4byte	0
+ 2356              	.LLST20:
+ 2357 0346 00000000 		.4byte	.LVL41
+ 2358 034a 18000000 		.4byte	.LVL43
+ 2359 034e 0100     		.2byte	0x1
+ 2360 0350 52       		.byte	0x52
+ 2361 0351 18000000 		.4byte	.LVL43
+ 2362 0355 12020000 		.4byte	.LFE4
+ 2363 0359 0100     		.2byte	0x1
+ 2364 035b 57       		.byte	0x57
+ 2365 035c 00000000 		.4byte	0
+ 2366 0360 00000000 		.4byte	0
+ 2367              	.LLST21:
+ 2368 0364 00000000 		.4byte	.LVL41
+ 2369 0368 18000000 		.4byte	.LVL43
+ 2370 036c 0100     		.2byte	0x1
+ 2371 036e 53       		.byte	0x53
+ 2372 036f 18000000 		.4byte	.LVL43
+ 2373 0373 12020000 		.4byte	.LFE4
+ 2374 0377 0100     		.2byte	0x1
+ 2375 0379 55       		.byte	0x55
+ 2376 037a 00000000 		.4byte	0
+ 2377 037e 00000000 		.4byte	0
+ 2378              	.LLST22:
+ 2379 0382 1A010000 		.4byte	.LVL61
+ 2380 0386 3A010000 		.4byte	.LVL63
+ 2381 038a 0100     		.2byte	0x1
+ 2382 038c 50       		.byte	0x50
+ 2383 038d 9A010000 		.4byte	.LVL67
+ 2384 0391 B6010000 		.4byte	.LVL69
+ 2385 0395 0100     		.2byte	0x1
+ 2386 0397 50       		.byte	0x50
+ 2387 0398 00000000 		.4byte	0
+ 2388 039c 00000000 		.4byte	0
+ 2389              	.LLST23:
+ 2390 03a0 B2000000 		.4byte	.LVL54
+ 2391 03a4 0A010000 		.4byte	.LVL60
+ 2392 03a8 0100     		.2byte	0x1
+ 2393 03aa 53       		.byte	0x53
+ 2394 03ab 5E010000 		.4byte	.LVL64
+ 2395 03af 8A010000 		.4byte	.LVL66
+ 2396 03b3 0100     		.2byte	0x1
+ 2397 03b5 52       		.byte	0x52
+ 2398 03b6 D2010000 		.4byte	.LVL70
+ 2399 03ba F2010000 		.4byte	.LVL72
+ 2400 03be 0100     		.2byte	0x1
+ 2401 03c0 53       		.byte	0x53
+ 2402 03c1 F8010000 		.4byte	.LVL74
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 50
+
+
+ 2403 03c5 04020000 		.4byte	.LVL76
+ 2404 03c9 0100     		.2byte	0x1
+ 2405 03cb 53       		.byte	0x53
+ 2406 03cc 08020000 		.4byte	.LVL77
+ 2407 03d0 0C020000 		.4byte	.LVL78
+ 2408 03d4 0100     		.2byte	0x1
+ 2409 03d6 53       		.byte	0x53
+ 2410 03d7 00000000 		.4byte	0
+ 2411 03db 00000000 		.4byte	0
+ 2412              	.LLST24:
+ 2413 03df 6C000000 		.4byte	.LVL47
+ 2414 03e3 9E000000 		.4byte	.LVL50
+ 2415 03e7 0100     		.2byte	0x1
+ 2416 03e9 50       		.byte	0x50
+ 2417 03ea B8000000 		.4byte	.LVL55
+ 2418 03ee DE000000 		.4byte	.LVL56
+ 2419 03f2 0100     		.2byte	0x1
+ 2420 03f4 52       		.byte	0x52
+ 2421 03f5 EE000000 		.4byte	.LVL57
+ 2422 03f9 F8000000 		.4byte	.LVL58
+ 2423 03fd 0100     		.2byte	0x1
+ 2424 03ff 52       		.byte	0x52
+ 2425 0400 F8000000 		.4byte	.LVL58
+ 2426 0404 04010000 		.4byte	.LVL59
+ 2427 0408 0800     		.2byte	0x8
+ 2428 040a 73       		.byte	0x73
+ 2429 040b 00       		.sleb128 0
+ 2430 040c 34       		.byte	0x34
+ 2431 040d 24       		.byte	0x24
+ 2432 040e 75       		.byte	0x75
+ 2433 040f 00       		.sleb128 0
+ 2434 0410 22       		.byte	0x22
+ 2435 0411 9F       		.byte	0x9f
+ 2436 0412 F2010000 		.4byte	.LVL72
+ 2437 0416 F6010000 		.4byte	.LVL73
+ 2438 041a 0100     		.2byte	0x1
+ 2439 041c 50       		.byte	0x50
+ 2440 041d F6010000 		.4byte	.LVL73
+ 2441 0421 F8010000 		.4byte	.LVL74
+ 2442 0425 0100     		.2byte	0x1
+ 2443 0427 51       		.byte	0x51
+ 2444 0428 F8010000 		.4byte	.LVL74
+ 2445 042c FE010000 		.4byte	.LVL75
+ 2446 0430 0100     		.2byte	0x1
+ 2447 0432 52       		.byte	0x52
+ 2448 0433 00000000 		.4byte	0
+ 2449 0437 00000000 		.4byte	0
+ 2450              	.LLST25:
+ 2451 043b 18000000 		.4byte	.LVL43
+ 2452 043f 2A000000 		.4byte	.LVL44
+ 2453 0443 0100     		.2byte	0x1
+ 2454 0445 54       		.byte	0x54
+ 2455 0446 32000000 		.4byte	.LVL45
+ 2456 044a AA000000 		.4byte	.LVL51
+ 2457 044e 0100     		.2byte	0x1
+ 2458 0450 54       		.byte	0x54
+ 2459 0451 AC000000 		.4byte	.LVL52
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 51
+
+
+ 2460 0455 AE000000 		.4byte	.LVL53
+ 2461 0459 0100     		.2byte	0x1
+ 2462 045b 54       		.byte	0x54
+ 2463 045c 0A010000 		.4byte	.LVL60
+ 2464 0460 8A010000 		.4byte	.LVL66
+ 2465 0464 0100     		.2byte	0x1
+ 2466 0466 54       		.byte	0x54
+ 2467 0467 F2010000 		.4byte	.LVL72
+ 2468 046b F8010000 		.4byte	.LVL74
+ 2469 046f 0100     		.2byte	0x1
+ 2470 0471 54       		.byte	0x54
+ 2471 0472 00000000 		.4byte	0
+ 2472 0476 00000000 		.4byte	0
+ 2473              	.LLST26:
+ 2474 047a AE000000 		.4byte	.LVL53
+ 2475 047e 0A010000 		.4byte	.LVL60
+ 2476 0482 0100     		.2byte	0x1
+ 2477 0484 54       		.byte	0x54
+ 2478 0485 F8010000 		.4byte	.LVL74
+ 2479 0489 04020000 		.4byte	.LVL76
+ 2480 048d 0100     		.2byte	0x1
+ 2481 048f 54       		.byte	0x54
+ 2482 0490 00000000 		.4byte	0
+ 2483 0494 00000000 		.4byte	0
+ 2484              	.LLST27:
+ 2485 0498 80000000 		.4byte	.LVL48
+ 2486 049c 86000000 		.4byte	.LVL49
+ 2487 04a0 0100     		.2byte	0x1
+ 2488 04a2 53       		.byte	0x53
+ 2489 04a3 00000000 		.4byte	0
+ 2490 04a7 00000000 		.4byte	0
+ 2491              		.section	.debug_aranges,"",%progbits
+ 2492 0000 44000000 		.4byte	0x44
+ 2493 0004 0200     		.2byte	0x2
+ 2494 0006 00000000 		.4byte	.Ldebug_info0
+ 2495 000a 04       		.byte	0x4
+ 2496 000b 00       		.byte	0
+ 2497 000c 0000     		.2byte	0
+ 2498 000e 0000     		.2byte	0
+ 2499 0010 00000000 		.4byte	.LFB0
+ 2500 0014 20000000 		.4byte	.LFE0-.LFB0
+ 2501 0018 00000000 		.4byte	.LFB1
+ 2502 001c 0C000000 		.4byte	.LFE1-.LFB1
+ 2503 0020 00000000 		.4byte	.LFB2
+ 2504 0024 80000000 		.4byte	.LFE2-.LFB2
+ 2505 0028 00000000 		.4byte	.LFB3
+ 2506 002c 1A010000 		.4byte	.LFE3-.LFB3
+ 2507 0030 00000000 		.4byte	.LFB4
+ 2508 0034 12020000 		.4byte	.LFE4-.LFB4
+ 2509 0038 00000000 		.4byte	.LFB5
+ 2510 003c 0E000000 		.4byte	.LFE5-.LFB5
+ 2511 0040 00000000 		.4byte	0
+ 2512 0044 00000000 		.4byte	0
+ 2513              		.section	.debug_ranges,"",%progbits
+ 2514              	.Ldebug_ranges0:
+ 2515 0000 0A000000 		.4byte	.LBB2
+ 2516 0004 FA000000 		.4byte	.LBE2
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 52
+
+
+ 2517 0008 16010000 		.4byte	.LBB4
+ 2518 000c 18010000 		.4byte	.LBE4
+ 2519 0010 00000000 		.4byte	0
+ 2520 0014 00000000 		.4byte	0
+ 2521 0018 18000000 		.4byte	.LBB5
+ 2522 001c B6010000 		.4byte	.LBE5
+ 2523 0020 F2010000 		.4byte	.LBB7
+ 2524 0024 04020000 		.4byte	.LBE7
+ 2525 0028 00000000 		.4byte	0
+ 2526 002c 00000000 		.4byte	0
+ 2527 0030 00000000 		.4byte	.LFB0
+ 2528 0034 20000000 		.4byte	.LFE0
+ 2529 0038 00000000 		.4byte	.LFB1
+ 2530 003c 0C000000 		.4byte	.LFE1
+ 2531 0040 00000000 		.4byte	.LFB2
+ 2532 0044 80000000 		.4byte	.LFE2
+ 2533 0048 00000000 		.4byte	.LFB3
+ 2534 004c 1A010000 		.4byte	.LFE3
+ 2535 0050 00000000 		.4byte	.LFB4
+ 2536 0054 12020000 		.4byte	.LFE4
+ 2537 0058 00000000 		.4byte	.LFB5
+ 2538 005c 0E000000 		.4byte	.LFE5
+ 2539 0060 00000000 		.4byte	0
+ 2540 0064 00000000 		.4byte	0
+ 2541              		.section	.debug_line,"",%progbits
+ 2542              	.Ldebug_line0:
+ 2543 0000 88020000 		.section	.debug_str,"MS",%progbits,1
+ 2543      0200A900 
+ 2543      00000201 
+ 2543      FB0E0D00 
+ 2543      01010101 
+ 2544              	.LASF36:
+ 2545 0000 6A736D6E 		.ascii	"jsmn_fill_token\000"
+ 2545      5F66696C 
+ 2545      6C5F746F 
+ 2545      6B656E00 
+ 2546              	.LASF33:
+ 2547 0010 6A736D6E 		.ascii	"jsmn.c\000"
+ 2547      2E6300
+ 2548              	.LASF22:
+ 2549 0017 746F6B73 		.ascii	"toksuper\000"
+ 2549      75706572 
+ 2549      00
+ 2550              	.LASF31:
+ 2551 0020 636F756E 		.ascii	"count\000"
+ 2551      7400
+ 2552              	.LASF4:
+ 2553 0026 4A534D4E 		.ascii	"JSMN_OBJECT\000"
+ 2553      5F4F424A 
+ 2553      45435400 
+ 2554              	.LASF16:
+ 2555 0032 73746172 		.ascii	"start\000"
+ 2555      7400
+ 2556              	.LASF21:
+ 2557 0038 746F6B6E 		.ascii	"toknext\000"
+ 2557      65787400 
+ 2558              	.LASF37:
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 53
+
+
+ 2559 0040 666F756E 		.ascii	"found\000"
+ 2559      6400
+ 2560              	.LASF27:
+ 2561 0046 6A736D6E 		.ascii	"jsmn_alloc_token\000"
+ 2561      5F616C6C 
+ 2561      6F635F74 
+ 2561      6F6B656E 
+ 2561      00
+ 2562              	.LASF38:
+ 2563 0057 6A736D6E 		.ascii	"jsmn_parse\000"
+ 2563      5F706172 
+ 2563      736500
+ 2564              	.LASF8:
+ 2565 0062 756E7369 		.ascii	"unsigned char\000"
+ 2565      676E6564 
+ 2565      20636861 
+ 2565      7200
+ 2566              	.LASF32:
+ 2567 0070 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2567      43313120 
+ 2567      352E342E 
+ 2567      31203230 
+ 2567      31363036 
+ 2568 00a3 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2568      20726576 
+ 2568      6973696F 
+ 2568      6E203233 
+ 2568      37373135 
+ 2569 00d6 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2569      66756E63 
+ 2569      74696F6E 
+ 2569      2D736563 
+ 2569      74696F6E 
+ 2570              	.LASF3:
+ 2571 00fe 4A534D4E 		.ascii	"JSMN_UNDEFINED\000"
+ 2571      5F554E44 
+ 2571      4546494E 
+ 2571      454400
+ 2572              	.LASF28:
+ 2573 010d 6A736D6E 		.ascii	"jsmn_parse_primitive\000"
+ 2573      5F706172 
+ 2573      73655F70 
+ 2573      72696D69 
+ 2573      74697665 
+ 2574              	.LASF19:
+ 2575 0122 6A736D6E 		.ascii	"jsmntok\000"
+ 2575      746F6B00 
+ 2576              	.LASF9:
+ 2577 012a 73697A65 		.ascii	"size_t\000"
+ 2577      5F7400
+ 2578              	.LASF5:
+ 2579 0131 4A534D4E 		.ascii	"JSMN_ARRAY\000"
+ 2579      5F415252 
+ 2579      415900
+ 2580              	.LASF18:
+ 2581 013c 6A736D6E 		.ascii	"jsmntok_t\000"
+ 2581      746F6B5F 
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 54
+
+
+ 2581      7400
+ 2582              	.LASF10:
+ 2583 0146 6A736D6E 		.ascii	"jsmntype_t\000"
+ 2583      74797065 
+ 2583      5F7400
+ 2584              	.LASF39:
+ 2585 0151 6A736D6E 		.ascii	"jsmn_init\000"
+ 2585      5F696E69 
+ 2585      7400
+ 2586              	.LASF23:
+ 2587 015b 70617273 		.ascii	"parser\000"
+ 2587      657200
+ 2588              	.LASF12:
+ 2589 0162 4A534D4E 		.ascii	"JSMN_ERROR_INVAL\000"
+ 2589      5F455252 
+ 2589      4F525F49 
+ 2589      4E56414C 
+ 2589      00
+ 2590              	.LASF0:
+ 2591 0173 756E7369 		.ascii	"unsigned int\000"
+ 2591      676E6564 
+ 2591      20696E74 
+ 2591      00
+ 2592              	.LASF24:
+ 2593 0180 746F6B65 		.ascii	"tokens\000"
+ 2593      6E7300
+ 2594              	.LASF6:
+ 2595 0187 4A534D4E 		.ascii	"JSMN_STRING\000"
+ 2595      5F535452 
+ 2595      494E4700 
+ 2596              	.LASF25:
+ 2597 0193 6E756D5F 		.ascii	"num_tokens\000"
+ 2597      746F6B65 
+ 2597      6E7300
+ 2598              	.LASF1:
+ 2599 019e 6C6F6E67 		.ascii	"long long int\000"
+ 2599      206C6F6E 
+ 2599      6720696E 
+ 2599      7400
+ 2600              	.LASF34:
+ 2601 01ac 443A5C70 		.ascii	"D:\\psoc-workspace\\Lab Assignments\\Lab3\\Lab3\\La"
+ 2601      736F632D 
+ 2601      776F726B 
+ 2601      73706163 
+ 2601      655C4C61 
+ 2602 01da 62332E63 		.ascii	"b3.cydsn\000"
+ 2602      7964736E 
+ 2602      00
+ 2603              	.LASF15:
+ 2604 01e3 74797065 		.ascii	"type\000"
+ 2604      00
+ 2605              	.LASF20:
+ 2606 01e8 6A736D6E 		.ascii	"jsmn_parser\000"
+ 2606      5F706172 
+ 2606      73657200 
+ 2607              	.LASF35:
+ 2608 01f4 6A736D6E 		.ascii	"jsmnerr\000"
+ARM GAS  C:\Users\abhim\AppData\Local\Temp\ccJxzK3c.s 			page 55
+
+
+ 2608      65727200 
+ 2609              	.LASF30:
+ 2610 01fc 6A736D6E 		.ascii	"jsmn_parse_string\000"
+ 2610      5F706172 
+ 2610      73655F73 
+ 2610      7472696E 
+ 2610      6700
+ 2611              	.LASF26:
+ 2612 020e 746F6B65 		.ascii	"token\000"
+ 2612      6E00
+ 2613              	.LASF29:
+ 2614 0214 63686172 		.ascii	"char\000"
+ 2614      00
+ 2615              	.LASF2:
+ 2616 0219 6C6F6E67 		.ascii	"long double\000"
+ 2616      20646F75 
+ 2616      626C6500 
+ 2617              	.LASF14:
+ 2618 0225 7369676E 		.ascii	"signed char\000"
+ 2618      65642063 
+ 2618      68617200 
+ 2619              	.LASF11:
+ 2620 0231 4A534D4E 		.ascii	"JSMN_ERROR_NOMEM\000"
+ 2620      5F455252 
+ 2620      4F525F4E 
+ 2620      4F4D454D 
+ 2620      00
+ 2621              	.LASF17:
+ 2622 0242 73697A65 		.ascii	"size\000"
+ 2622      00
+ 2623              	.LASF13:
+ 2624 0247 4A534D4E 		.ascii	"JSMN_ERROR_PART\000"
+ 2624      5F455252 
+ 2624      4F525F50 
+ 2624      41525400 
+ 2625              	.LASF7:
+ 2626 0257 4A534D4E 		.ascii	"JSMN_PRIMITIVE\000"
+ 2626      5F505249 
+ 2626      4D495449 
+ 2626      564500
+ 2627              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

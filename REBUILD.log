@@ -1,0 +1,116 @@
+--------------- Rebuild Started: 01/28/2025 22:54:55 Project: Lab3, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\main.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\control.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\CRingBuffer.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\cymetadata.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\Cm3Start.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\CyDmac.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\CyFlash.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\CyLib.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\cyPm.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\CySpc.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\cyutils.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_activate.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_alcancel.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_alget.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_algetbase.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_alsetabs.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_alsetrel.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_altick.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_chaintas.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_evclear.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_evget.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_evset.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_evwait.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_force_schedule.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_getcountervalue.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_getelapsedvalue.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_gettaskid.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_gettaskstate.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_iparam.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_irqendin.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_lockres.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_lookup.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_rq_exchg.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_rq_first.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_rq_inser.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_schedule.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_semgetvalue.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_sempost.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_semtrywait.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_semwait.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_shtdown.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_startos.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_terminat.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_thendin.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_tnterm.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_tstub.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_ulockallres.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_ulockres.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_cortex_mx_ee_context.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_cortex_mx_ee_system_timer.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_cortex_mx_ee_utils.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_gnu_change_context_isr.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_gnu_irq_stack.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_gnu_multi_context.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_ee_gnu_oo.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_common_ee_hal_structs.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\ErikaOS_eecfg.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\UART_LOG.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\UART_LOG_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\UART_LOG_INT.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\UART_LOG_BOOT.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\isr_uart.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\UART_LOG_IntClock.o"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\Lab3.hex"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\Lab3.elf"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\Lab3.map"
+Deleting file ".\Lab3.cycdx"
+Deleting file ".\Lab3.svd"
+Deleting file ".\Lab3.rpt"
+Deleting file ".\Lab3_timing.html"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\.deps\SOURCE_C__ARM_GCC_GENERIC.P"
+Deleting file ".\CortexM3\ARM_GCC_541\Debug\.deps\SOURCE_ASM__ARM_GCC_GENERIC.P"
+cydsfit.exe -.appdatapath "C:\Users\abhim\AppData\Local\Cypress Semiconductor\PSoC Creator\4.4" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p "D:\psoc-workspace\Lab Assignments\Lab3\Lab3\Lab3.cydsn\Lab3.cyprj" -d CY8C5888LTQ-LP097 -s "D:\psoc-workspace\Lab Assignments\Lab3\Lab3\Lab3.cydsn\Generated_Source\PSoC5" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+HDL Generation...
+Synthesis...
+Tech Mapping...
+Analog Placement...
+Analog Routing...
+Analog Code Generation...
+Digital Placement...
+Digital Routing...
+Bitstream Generation...
+Bitstream Verification...
+Static timing analysis...
+API Generation...
+Dependency Generation...
+Cleanup...
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I.\source\asw -I.\source\bsw -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c source\asw\main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
+source\asw\main.c: In function 'Functsk_json':
+source\asw\main.c:55:19: warning: unused variable 'ev' [-Wunused-variable]
+     EventMaskType ev = 0;
+                   ^
+source\asw\main.c: In function 'isr_uartRx':
+source\asw\main.c:90:16: warning: unused variable 'status' [-Wunused-variable]
+     StatusType status;
+                ^
+source\asw\main.c:88:16: warning: unused variable 'count' [-Wunused-variable]
+     static int count = 0;
+                ^
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I.\source\asw -I.\source\bsw -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/control.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c control.c -o .\CortexM3\ARM_GCC_541\Debug\control.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I.\source\asw -I.\source\bsw -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/CRingBuffer.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c source\bsw\CRingBuffer.c -o .\CortexM3\ARM_GCC_541\Debug\CRingBuffer.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I.\source\asw -I.\source\bsw -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/parser.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c source\bsw\parser.c -o .\CortexM3\ARM_GCC_541\Debug\parser.o
+In file included from source\bsw\parser.c:24:0:
+source\bsw\parser.h:134:8: error: unknown type name 'type'
+ extern type FILE_variable;
+        ^
+source\bsw\parser.c:58:20: error: unknown type name 'type'
+ RC_t FILE_function(type para)
+                    ^
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Rebuild Failed: 01/28/2025 22:55:24 ---------------
